@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Course</title>
+</head>
+<body>
+<h1>Add Course</h1>
+<form action="/action_page.php">
+    <label for="name">Course Name</label>
+    <br />
+    <input name="name" type="text" />
+    <br />
+    <label for="instructor">Instructor</label>
+    <br />
+    <select name="instructor" id="instructor">
+        <option selected value="noSelection">"Please Select Instructor"</option>
+        <option value="instructor1">instructor1</option>
+        <option value="instructor2">instructor2</option>
+        <option value="instructor3">instructor3</option>
+        <option value="instructor4">instructor4</option>
+    </select>
+    <br />
+    <label for="tas">TA's (To select multiple hold ctrl)</label>
+    <br />
+    <select name="tas" id="tas" multiple>
+        <option selected value="noSelection">"Please Select TA's"</option>
+        <option value="ta1">ta1</option>
+        <option value="ta2">ta2</option>
+        <option value="ta3">ta3</option>
+        <option value="ta4">ta4</option>
+    </select>
+    <br /><br />
+    <input type="submit" value="Submit" /></form>
+</body>
+</html>
