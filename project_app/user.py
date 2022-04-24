@@ -9,7 +9,7 @@
 # phone: string
 # getters/setters: accesses and modifies data within user
 
-class User(object):
+class user(object):
   def __init__(self, id=1, email="email@a.com", password="pass", name="John Doe", address="USA", phoneNum="123-456-7890"):
   #   #precondition:
   #   #postcondition:
