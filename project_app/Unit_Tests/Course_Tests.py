@@ -5,6 +5,20 @@ class CourseTestCase(unittest.TestCase):
     def setup(self):
         self.assertEqual(True, False)  # add assertion here
 
-    def test_something(self):
+    def testAddCourse(self):
         self.assertEqual(True, False)  # add assertion here
-    #this is a test
+
+    def testDeleteCourse(self):
+        self.assertEqual(True, False)  # add assertion here
+
+    def testCourseAddSection(self):
+        self.assertEqual(True, False)  # add assertion here
+
+    def testCourseDeleteSection(self):
+        self.assertEqual(True, False)  # add assertion here
+
+    def testCourseAssignInstructor(self):
+        self.assertEqual(True, False)  # add assertion here
+
+    def testCourseAssignTA(self):
+        self.assertEqual(True, False)  # add assertion here
