@@ -40,7 +40,7 @@ class CourseTestCase(unittest.TestCase):
 
     def testCourseAssignTA(self):
         self.c2.assignTA(self.t2)
-        self.assertEqual(self.c2.containsTA(self.t2), )  # add assertion here
+        self.assertEqual(self.c2.containsTA(self.t2), self.sect2)  # add assertion here
 
 
 if __name__ == '__main__':
