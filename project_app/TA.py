@@ -1,6 +1,15 @@
-from user import user
+from user import User
 
 
-class TA(user):
+class TA(User):
+    sectionList = []
+
     def __init__(self):
         pass
+
+    def getSectionList(self):
+        return self.sectionList
+
+    def setSectionList(self, sectList):
+        for i in sectList:
+            self.sectionList.append(i)
