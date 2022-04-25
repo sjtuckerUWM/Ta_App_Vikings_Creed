@@ -14,6 +14,7 @@ class Login(View):
         try:
             m = User.objects.get(name=request.POST['name'])
             badPassword = (m.password != request.POST['password'])
+
         except:
             noSuchUser = True
         if noSuchUser:

@@ -1,7 +1,9 @@
+
 import unittest
-from course import Course
-from section import Section
-from TA import TA
+
+from project_app.TA import TA
+from project_app.course import Course
+from project_app.section import Section
 
 
 class CourseTestCase(unittest.TestCase):
@@ -37,7 +39,8 @@ class CourseTestCase(unittest.TestCase):
         self.assertEqual(True, False)  # add assertion here
 
     def testCourseAssignTA(self):
-        self.assertEqual(True, False)  # add assertion here
+        self.c2.assignTA(self.t2)
+        self.assertEqual(self.c2.containsTA(self.t2), )  # add assertion here
 
 
 if __name__ == '__main__':
