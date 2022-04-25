@@ -9,7 +9,7 @@ class User(models.Model):
     email = models.CharField(max_length=100)
     password = models.CharField(max_length=20)
     address = models.CharField(max_length=100)
-    phone_number = models.IntegerField(max_length=9)
+    phone_number = models.CharField(max_length=11)
     ROLE_SELECTIONS = [('Supervisor', 0), ('Instructor', 1), ('TA', 2)]
 
 
