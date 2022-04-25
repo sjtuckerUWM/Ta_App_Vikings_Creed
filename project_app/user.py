@@ -10,7 +10,7 @@
 # role: int
 # getters/setters: accesses and modifies data within user
 
-class user(object):
+class User(object):
     userId = 0
     email = ""
     password = ""
