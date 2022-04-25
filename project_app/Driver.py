@@ -1,8 +1,34 @@
+from project_app.supervisor import Supervisor
+from project_app.instructor import Instructor
+from project_app.TA import TA
+from project_app.course import Course
+from project_app.section import Section
+from models import User, Course, Section
+
 class Driver(object):
-    def _courselist_(self):
-         # Precondition: None
-        #Postcondition: Creates a course with empty fields awaiting data
+    def __init__(self):
+        self.currentAccount = None
+        self.accountList = []
+        self.courseList = []
+        self.fillAccounts()
+
         pass
+
+    def fillAccounts(self):
+        pass
+
+    def addAccount_(self, id, email, password, name, address, phoneNum, role):
+        if(role is 0) :
+            self.accountList.append(Supervisor(id, email, password, name, address, phoneNum))
+        elif(role is 1) :
+            self.accountList.append(Instructor(id, email, password, name, address, phoneNum))
+        elif (role is 2):
+            self.accountList.append(TA(id, email, password, name, address, phoneNum))
+
+
+
+    def deleteAccount_(self, accountIndex):
+        self.accountList.pop(accountIndex)
 
     def addCourse_(self, courseid, coursename):
         # Precondition: Course parameters are valid
@@ -14,14 +40,5 @@ class Driver(object):
     #Postcondition: Deletes course with matching ID from the database
         pass
 
-    def addSection_(self,courseId, courseName):
-        #Precondition: All fields passed in are valid data types
-        #Postcondition: The section with the corresponding section number in the corresponding class is added to the database
-        pass
 
-    def deletesection_(self,courseid, sectionid):
-        # Precondition: All fields passed in are valid data types
-        # Postcondition: The section with the corresponding section
-        # number in the corresponding class is deleted from the database
-        pass
 
