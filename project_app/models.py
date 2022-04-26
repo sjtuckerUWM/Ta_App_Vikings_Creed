@@ -17,14 +17,19 @@ class CourseModel(models.Model):
     course_id = models.AutoField(primary_key=True)
     dept_code = models.CharField(max_length=20)
     name = models.CharField(max_length=20)
+
     assigned_instructor = models.ForeignKey(UserModel, on_delete=models.PROTECT , related_name="instuctor")
     assigned_tas = models.ManyToManyField(UserModel)
 
 
+
 class SectionModel(models.Model):
     section_id = models.AutoField(primary_key=True)
+
     course = models.ForeignKey(CourseModel, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     grader = models.BooleanField(default=False)
     assigned_ta = models.ForeignKey(UserModel, on_delete=models.PROTECT)
+
+
 
