@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 
-class User(models.Model):
+class UserModel(models.Model):
     user_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
     email = models.CharField(max_length=100)
@@ -13,18 +13,18 @@ class User(models.Model):
     ROLE_SELECTIONS = [('Supervisor', 0), ('Instructor', 1), ('TA', 2)]
 
 
-class Course(models.Model):
+class CourseModel(models.Model):
     course_id = models.AutoField(primary_key=True)
     dept_code = models.CharField(max_length=20)
     name = models.CharField(max_length=20)
-    assigned_instructor = models.ForeignKey(User.user_id, on_delete=models.PROTECT)
-    assigned_tas = models.ManyToManyField(User.user_id)
+    assigned_instructor = models.ForeignKey(UserModel.user_id, on_delete=models.PROTECT)
+    assigned_tas = models.ManyToManyField(UserModel.user_id)
 
 
-class Section(models.Model):
+class SectionModel(models.Model):
     section_id = models.AutoField(primary_key=True)
-    course = models.ForeignKey(Course.course_id, on_delete=models.CASCADE)
+    course = models.ForeignKey(CourseModel.course_id, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     grader = models.BooleanField(default=False)
-    assigned_ta = models.ForeignKey(User.user_id, on_delete=models.PROTECT)
+    assigned_ta = models.ForeignKey(UserModel.user_id, on_delete=models.PROTECT)
 

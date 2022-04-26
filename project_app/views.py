@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from models import User
+from models import UserModel
+from project_app.Driver import Driver
+
+driver = Driver()
 
 
 # Create your views here.
@@ -9,21 +12,15 @@ class Login(View):
         return render(request, "loginPage.html")
 
     def post(self, request):
-        noSuchUser = False
-        badPassword = False
-        try:
-            m = User.objects.get(name=request.POST['name'])
-            badPassword = (m.password != request.POST['password'])
+        email = request.POST['email']
+        password = request.POST['password']
+        outcome = Driver.Login(self, email, password)
 
-        except:
-            noSuchUser = True
-        if noSuchUser:
-            m = User(name=request.POST['name'], password=request.POST['password'])
-            m.save()
-            request.session["name"] = m.name
-            return redirect("/things/")
-        elif badPassword:
+        if outcome == 0:
+            return render(request, "home.html", {"message": "email is not registered"})
+        elif outcome == 1:
             return render(request, "home.html", {"message": "bad password"})
+        elif outcome == 2:
+            return redirect("")  # place url from url.py
         else:
-            request.session["name"] = m.name
-            return redirect("/things/")
+            return render(request, "home.html", {"message": "login error"})

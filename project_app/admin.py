@@ -1,9 +1,9 @@
 from django.contrib import admin
-from project_app.models import User
-from project_app.models import Course
-from project_app.models import Section
+from project_app.models import UserModel
+from project_app.models import CourseModel
+from project_app.models import SectionModel
 
 # Register your models here.
-admin.site.register(User)
-admin.site.register(Course)
-admin.site.register(Section)
+admin.site.register(UserModel)
+admin.site.register(CourseModel)
+admin.site.register(SectionModel)
