@@ -4,7 +4,7 @@ from models import UserModel
 from project_app.Driver import Driver
 
 
-# driver = Driver()
+driver = Driver()
 
 
 # Create your views here.
@@ -13,9 +13,12 @@ class Login(View):
         return render(request, "loginPage.html")
 
     def post(self, request):
-        driver = Driver()
+
+
         email = request.POST['email']
         password = request.POST['password']
+        print(email)
+        print(password)
         outcome = driver.logIn(email, password)
 
         if outcome == 0:
@@ -23,8 +26,8 @@ class Login(View):
         elif outcome == 1:
             return render(request, "loginPage.html", {"message": "bad password"})
         elif outcome == 2:
-            request.session["driver"] = driver
-            return redirect("homePage.html")
+            request.session["currentUser"] = driver.getCurrentAccount().getEmail()
+            return redirect('/home/')  # place url from url.py
         else:
             return render(request, "loginPage.html", {"message": "login error"})
 
@@ -33,26 +36,4 @@ class Home(View):
     def get(self, request):
         return render(request, "homePage.html")
 
-
-class AccountManagement(View):
-    def get(self, request):
-        emails = list(map(UserModel.email))
-        return render(request, "accountManagement.html", {"emails": emails})
-
-
-class AddAccount(View):
-    def get(self, request):
-        return render(request, "addAccountPage.html")
-
-    def post(self, request):
-        driver = request.session["driver"]
-        email = request.POST['email']
-        password = request.POST['password']
-        name = request.POST['name']
-        address = request.POST['address']
-        phoneNum = request.POST['phoneNum']
-        role = request.POST['role']
-
-        driver.addAccount(self, email, password, name, address, phoneNum, role)
-
-        return redirect("accountManagement.html")
+# class AddAccount(View):
