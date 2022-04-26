@@ -15,21 +15,13 @@
         <th></th>
         <th></th>
       </tr>
-      <tr>
-        <td>account1@email.com</td>
-        <td><a href = "addAccountPage.html">Edit</a></td>
-        <td><a href = "">Delete</a></td>
-      </tr>
-      <tr>
-        <td>account2@email.com</td>
-        <td><a href = "addAccountPage.html">Edit</a></td>
-        <td><a href = "">Delete</a></td>
-      </tr>
-      <tr>
-        <td>account3@email.com</td>
-        <td><a href = "addAccountPage.html">Edit</a></td>
-        <td><a href = "">Delete</a></td>
-      </tr>
+        {% for i in emails %}
+            <tr>
+                <td>i</td>
+                <td><a href = "addAccountPage.html">Edit</a></td>
+                <td><a href = "">Delete</a></td>
+            </tr>
+        {% endfor %}
     </table>
 
 </body>
