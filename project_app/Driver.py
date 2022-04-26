@@ -3,7 +3,7 @@ from project_app.instructor import Instructor
 from project_app.TA import TA
 from project_app.course import Course
 from project_app.section import Section
-from models import UserModel, CourseModel, SectionModel
+from project_app.models import UserModel, CourseModel, SectionModel
 
 class Driver(object):
     def __init__(self):
@@ -16,14 +16,14 @@ class Driver(object):
 
     def fillAccounts(self):
 
-        things = list(map(str, UserModel.objects))
+        things = UserModel
         for entry in things:
-            if (entry.role is 0):
+            if (entry.role == 0):
                 self.accountList.append(Supervisor(entry.id, entry.email, entry.password, entry.name, entry.address, entry.phoneNum))
 
-            elif (entry.role is 1):
+            elif (entry.role == 1):
                 self.accountList.append(Instructor(entry.id, entry.email, entry.password, entry.name, entry.address, entry.phoneNum))
-            elif (entry.role is 2):
+            elif (entry.role == 2):
                 self.accountList.append(TA(entry.id, entry.email, entry.password, entry.name, entry.address, entry.phoneNum))
 
     def logIn(self, email, password):
@@ -34,12 +34,12 @@ class Driver(object):
         return 0
 
     def addAccount(self, id, email, password, name, address, phoneNum, role):
-        if(role is 0) :
+        if(role == 0) :
             self.accountList.append(Supervisor(id, email, password, name, address, phoneNum))
 
-        elif(role is 1) :
+        elif(role == 1) :
             self.accountList.append(Instructor(id, email, password, name, address, phoneNum))
-        elif (role is 2):
+        elif (role == 2):
             self.accountList.append(TA(id, email, password, name, address, phoneNum))
         UserModel(id, email, password, name, address, phoneNum, role)
         UserModel.save()

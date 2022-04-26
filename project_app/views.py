@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from models import UserModel
+from project_app.models import UserModel
 from project_app.Driver import Driver
 
 # driver = Driver() testing session based driver

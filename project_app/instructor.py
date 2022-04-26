@@ -1,4 +1,4 @@
-from user import User
+from project_app.user import User
 
 
 class Instructor(User):
