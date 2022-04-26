@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views import View
-
-from project_app.models import UserModel
+from models import UserModel
 from project_app.Driver import Driver
 
-# driver = Driver() testing session based driver
 
+# driver = Driver()
 
 
 # Create your views here.
@@ -30,3 +29,9 @@ class Login(View):
         else:
             return render(request, "loginPage.html", {"message": "login error"})
 
+
+class Home(View):
+    def get(self, request):
+        return render(request, "homePage.html")
+
+# class AddAccount(View):
