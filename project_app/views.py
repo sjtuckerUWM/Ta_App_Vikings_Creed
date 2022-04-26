@@ -13,7 +13,6 @@ class Login(View):
         return render(request, "loginPage.html")
 
     def post(self, request):
-
         driver = Driver()
         email = request.POST['email']
         password = request.POST['password']
@@ -25,7 +24,7 @@ class Login(View):
             return render(request, "loginPage.html", {"message": "bad password"})
         elif outcome == 2:
             request.session["driver"] = driver
-            return redirect("homePage.html")  # place url from url.py
+            return redirect("homePage.html")
         else:
             return render(request, "loginPage.html", {"message": "login error"})
 
@@ -34,4 +33,26 @@ class Home(View):
     def get(self, request):
         return render(request, "homePage.html")
 
-# class AddAccount(View):
+
+class AccountManagement(View):
+    def get(self, request):
+        emails = list(map(UserModel.email))
+        return render(request, "accountManagement.html", {"emails": emails})
+
+
+class AddAccount(View):
+    def get(self, request):
+        return render(request, "addAccountPage.html")
+
+    def post(self, request):
+        driver = request.session["driver"]
+        email = request.POST['email']
+        password = request.POST['password']
+        name = request.POST['name']
+        address = request.POST['address']
+        phoneNum = request.POST['phoneNum']
+        role = request.POST['role']
+
+        driver.addAccount(self, email, password, name, address, phoneNum, role)
+
+        return redirect("accountManagement.html")
