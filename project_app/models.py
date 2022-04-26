@@ -18,9 +18,8 @@ class CourseModel(models.Model):
     dept_code = models.CharField(max_length=20)
     name = models.CharField(max_length=20)
 
-    assigned_instructor = models.ForeignKey(UserModel, on_delete=models.PROTECT , related_name="instuctor")
+    assigned_instructor = models.ForeignKey(UserModel, on_delete=models.PROTECT , related_name="instructor")
     assigned_tas = models.ManyToManyField(UserModel)
-
 
 
 class SectionModel(models.Model):
@@ -30,6 +29,3 @@ class SectionModel(models.Model):
     name = models.CharField(max_length=50)
     grader = models.BooleanField(default=False)
     assigned_ta = models.ForeignKey(UserModel, on_delete=models.PROTECT)
-
-
-
