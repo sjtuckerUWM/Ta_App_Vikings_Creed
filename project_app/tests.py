@@ -67,3 +67,4 @@ class MyTestSectionCreate(TestCase):
     def test_section_invalid(self):
         response = self.client.post('/', {'section_id': 361, 'course': 'CS', 'name': '801', 'grader': 'True','assigned_ta': 'TA apporv'}, follow=True)
         self.assertFalse("", response.context["name"],"Database access problem")
+        
