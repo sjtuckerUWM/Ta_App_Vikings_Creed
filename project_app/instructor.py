@@ -1,6 +1,15 @@
-from user import user
+from user import User
 
 
-class Instructor(user):
+class Instructor(User):
+    courseList = []
+
     def __init__(self):
         pass
+
+    def getCourseList(self):
+        return self.courseList
+
+    def setCourseList(self, courseList):
+        for i in courseList:
+            self.courseList.append(i)

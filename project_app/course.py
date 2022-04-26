@@ -27,6 +27,12 @@ class Course:
     def DeleteSection(self, SectionID):
         pass
 
+    def containsTA(self, TA, *TA_list):
+        for i in TA_list:
+            if i == TA:
+                return True
+        return False
+
     # Getters
     def getCourseID(self):
         return self.courseID

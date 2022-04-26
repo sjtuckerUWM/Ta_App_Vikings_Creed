@@ -7,49 +7,53 @@
 # name: string
 # address: string
 # phone: string
+# role: int
 # getters/setters: accesses and modifies data within user
 
-class user(object):
-  def __init__(self, id=1, email="email@a.com", password="pass", name="John Doe", address="USA", phoneNum="123-456-7890"):
-  #   #precondition:
-  #   #postcondition:
-    pass
-  # def __str__(self):
-  #   #precondition:
-  #   #postcondition:
-  #   pass
-  def getID(self):
-    pass
+class User(object):
+    userId = 0
+    email = ""
+    password = ""
+    name = ""
+    address = ""
+    phone = ""
+    role = 0
 
-  def setID(self, id):
-    pass
+    def __init__(self, userId=1, email="email@a.com", password="pass", name="John Doe", address="USA", phone="123-456-7890"):
+        pass
 
-  def getEmail(self):
-    pass
+    def getID(self):
+        return self.userId
 
-  def setEmail(self, email):
-    pass
+    def setID(self, userId):
+        self.userId = userId
 
-  def getPassword(self):
-    pass
+    def getEmail(self):
+        return self.email
 
-  def setPassword(self, password):
-    pass
+    def setEmail(self, email):
+        self.email = email
 
-  def getName(self):
-    pass
-  def setName(self, name):
-    pass
+    def getPassword(self):
+        return self.email
 
-  def getAddress(self):
-    pass
+    def setPassword(self, password):
+        self.password = password
 
-  def setAddress(self, address):
-    pass
+    def getName(self):
+        return self.name
 
-  def getPhoneNum(self):
-    pass
-  def setPhoneNum(self, phoneNum):
-    pass
+    def setName(self, name):
+        self.name = name
 
+    def getAddress(self):
+        return self.address
 
+    def setAddress(self, address):
+        self.address = address
+
+    def getPhoneNum(self):
+        return self.phone
+
+    def setPhoneNum(self, phoneNum):
+        self.phone = phoneNum
