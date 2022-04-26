@@ -16,7 +16,9 @@ class Driver(object):
 
     def fillAccounts(self):
 
-        things = UserModel
+        # things = UserModel.objects.iterator(100
+        things = UserModel.objects.all().iterator(100)
+
         for entry in things:
             if (entry.role == 0):
                 self.accountList.append(Supervisor(entry.id, entry.email, entry.password, entry.name, entry.address, entry.phoneNum))

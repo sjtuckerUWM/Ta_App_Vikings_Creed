@@ -10,7 +10,7 @@ class UserModel(models.Model):
     password = models.CharField(max_length=20)
     address = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=11)
-    ROLE_SELECTIONS = [('Supervisor', 0), ('Instructor', 1), ('TA', 2)]
+    role = models.IntegerField()
 
 
 class CourseModel(models.Model):
