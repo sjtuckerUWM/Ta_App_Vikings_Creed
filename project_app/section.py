@@ -1,4 +1,4 @@
-from TA import TA
+from project_app.TA import TA
 
 
 class Section:
