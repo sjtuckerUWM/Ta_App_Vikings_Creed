@@ -6,30 +6,57 @@
 </head>
 <body>
 <h1>Add Account</h1>
-<form action="/action_page.php"><label for="email">Email</label><br />
-    <input name="email" type="text" />
-    <br />
-    <label for="password">Password</label>
-    <br />
-    <input name="password" type="password" />
-    <br />
-    <label for="name">Name</label>
-    <br />
-    <input name="name" type="text" />
-    <br />
-    <label for="address">Address</label>
-    <br />
-    <input name="address" type="text" />
-    <br />
-    <label for="role">Role</label>
-    <br />
-    <input type="radio" id="html" name="role" value="supervisor">
-    <label for="supervisor">Supervisor</label><br>
-    <input type="radio" id="css" name="role" value="instructor">
-    <label for="css">Instructor</label><br>
-    <input type="radio" id="javascript" name="role" value="ta">
-    <label for="ta">TA</label>
-    <br /><br />
-    <input type="submit" value="Submit" /></form>
+<form action="/action_page.php">
+    <table style="width:100%">
+        <tr><td>
+            <label for="email">Email</label>
+        </td></tr>
+        <tr><td>
+            <input name="email" type="text" />
+        </td></tr>
+        <tr><td>
+            <label for="password">Password</label>
+        </td></tr>
+        <tr><td>
+            <input name="password" type="password" />
+        </td></tr>
+        <tr><td>
+            <label for="name">Name</label>
+        </td></tr>
+        <tr><td>
+            <input name="name" type="text" />
+        </td></tr>
+        <tr><td>
+            <label for="address">Address</label>
+        </td></tr>
+        <tr><td>
+            <input name="address" type="text" />
+        </td></tr>
+        <tr><td>
+            <label for="role">Role</label>
+        </td></tr>
+        <tr>
+            <td>
+                <input type="radio" id="html" name="role" value="supervisor">
+                <label for="supervisor">Supervisor</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="radio" id="css" name="role" value="instructor">
+                <label for="css">Instructor</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="radio" id="javascript" name="role" value="ta">
+                <label for="ta">TA</label>
+            </td>
+        </tr>
+        <tr><th>
+            <input type="submit" value="Submit" />
+        </th></tr>
+    </table>
+</form>
 </body>
 </html>

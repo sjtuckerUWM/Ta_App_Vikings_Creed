@@ -25,6 +25,9 @@ class Login(View):
         else:
             return render(request, "loginPage.html", {"message": "login error"})
 
+
 class Home(View):
     def get(self, request):
         return render(request, "homePage.html")
+
+#class AddAccount(View):
