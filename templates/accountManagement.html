@@ -15,9 +15,9 @@
         <th></th>
         <th></th>
       </tr>
-        {% for i in emails %}
+        {% for i in users %}
             <tr>
-                <td>i</td>
+                <td>{{i.email}}</td>
                 <td><a href = "addAccountPage.html">Edit</a></td>
                 <td><a href = "">Delete</a></td>
             </tr>
