@@ -11,16 +11,15 @@
 # getters/setters: accesses and modifies data within user
 
 class User(object):
-    userId = 0
-    email = ""
-    password = ""
-    name = ""
-    address = ""
-    phone = ""
-    role = 0
 
-    def __init__(self, userId=1, email="email@a.com", password="pass", name="John Doe", address="USA", phone="123-456-7890"):
-        pass
+
+    def __init__(self, userId=1, email="email@a.com", password="pass", name="John Doe", address="USA", phoneNum="123-456-7890"):
+        self.userId = userId
+        self.email = email
+        self.password = password
+        self.name = name
+        self.address = address
+        self.phoneNum = phoneNum
 
     def getID(self):
         return self.userId
@@ -35,7 +34,7 @@ class User(object):
         self.email = email
 
     def getPassword(self):
-        return self.email
+        return self.password
 
     def setPassword(self, password):
         self.password = password
@@ -53,7 +52,7 @@ class User(object):
         self.address = address
 
     def getPhoneNum(self):
-        return self.phone
+        return self.phoneNum
 
     def setPhoneNum(self, phoneNum):
-        self.phone = phoneNum
+        self.phoneNum = phoneNum
