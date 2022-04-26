@@ -17,10 +17,14 @@ class Login(View):
         outcome = Driver.Login(self, email, password)
 
         if outcome == 0:
-            return render(request, "home.html", {"message": "email is not registered"})
+            return render(request, "loginPage.html", {"message": "email is not registered"})
         elif outcome == 1:
-            return render(request, "home.html", {"message": "bad password"})
+            return render(request, "loginPage.html", {"message": "bad password"})
         elif outcome == 2:
-            return redirect("")  # place url from url.py
+            return redirect("/home/")  # place url from url.py
         else:
-            return render(request, "home.html", {"message": "login error"})
+            return render(request, "loginPage.html", {"message": "login error"})
+
+class Home(View):
+    def get(self, request):
+        return render(request, "homePage.html")
