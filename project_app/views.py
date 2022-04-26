@@ -45,7 +45,7 @@ class AddAccount(View):
         return render(request, "addAccountPage.html")
 
     def post(self, request):
-        driver = Driver()
+        driver = request.session["driver"]
         email = request.POST['email']
         password = request.POST['password']
         name = request.POST['name']
