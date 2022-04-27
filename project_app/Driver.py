@@ -5,6 +5,7 @@ from project_app.course import Course
 from project_app.section import Section
 from project_app.models import UserModel, CourseModel, SectionModel
 
+
 class Driver(object):
     def __init__(self):
         self.currentAccount = None
