@@ -34,7 +34,7 @@ class Driver(object):
                 self.accountList[entry.email] = (TA(entry.user_id, entry.email, entry.password, entry.name, entry.address, entry.phone_number))
 
     def logIn(self, email, password):
-        if self.currentAccount != None: return RuntimeError
+        # if self.currentAccount != None: return RuntimeError
         try:
             m = UserModel.objects.get(email=email)
             if UserModel.objects.get(email=email).password == password:
