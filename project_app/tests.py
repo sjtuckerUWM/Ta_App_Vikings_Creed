@@ -1,25 +1,35 @@
-
 from django.test import TestCase, Client
-from project_app.models import User, Course, Section
+from project_app.models import UserModel, CourseModel, SectionModel
 
 
 class MyTestLogIn(TestCase):
     def setUp(self):
-        self.user = User.objects.create(name="Group3", password="Vikings")
+        # self.user = UserModel.objects.create(name="", email="Group3", password="Vikings", address="", role=0)
+        self.client = Client()
+        self.user = UserModel(name="", email="Group3", password="Vikings", address="", role=0)
+        self.user.save()
 
     def test_LogIn_valid(self):
-        response = self.client.post('/', {'name': 'Group3', 'password': 'Vikings'})
-        self.assertEqual(response.url, '/homepage')
+        response = self.client.post('/', {'email': 'Group3', 'password': 'Vikings'})
+        self.assertEqual(response.url, '/homePage/')
 
     def test_LogIn_invalid(self):
-        response = self.client.post('/', {'name': 'Group3', 'password': 'Vitkings'})
-        self.assertEqual(response.context['message'], 'Invalid password')
+        response = self.client.post('/', {'email': 'Group3', 'password': 'Vitkings'})
+        self.assertEqual(response.context['message'], 'bad password')
+
+    def test_LogIn_Null_User(self):
+        response = self.client.post('/', {'email': '', 'password': 'Vikings'})
+        self.assertEqual(response.context['message'], 'email is not registered')
+
+    def test_LogIn_Null_password(self):
+        response = self.client.post('/', {'email': 'Group3', 'password': ''})
+        self.assertEqual(response.context['message'], 'bad password')
 
 
 class MyTestCreate(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User(name="Group3", password="Vikings")
+        self.user = UserModel(name="Group3", password="Vikings")
         self.user.save()
 
     def test_account_valid(self):
@@ -30,11 +40,12 @@ class MyTestCreate(TestCase):
         response = self.client.post('/', {'name': 'Group3', 'password': 'jumper100'})
         self.assertEqual(response.context['message'], 'Already existing. Please try again.')
 
+
 class MyTestCourseCreate(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.course = Course( course_id = 361, dept_code= "CS", name = "CS361", assigned_instructor= "Mr. Rock", assigned_tas = "TA apporv")
+        self.course = CourseModel( course_id = 361, dept_code= "CS", name = "CS361", assigned_instructor= "Mr. Rock", assigned_tas = "TA apporv")
         self.course.save()
 
     def test_course_page(self):
@@ -49,11 +60,12 @@ class MyTestCourseCreate(TestCase):
         response = self.client.post('/', {'course_id': 361, 'dept_code': 'CS','name':'CS361','assigned_instructor':'Mr. Rock', 'assigned_tas':'TA apporv'}, follow = True)
         self.assertFalse("", response.context["name"],"Database access problem")
 
+
 class MyTestSectionCreate(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.section = Section( section_id = 361, course= "CS361", name = "801",grader= True, assigned_ta = "TA apporv")
+        self.section = SectionModel( section_id = 361, course= "CS361", name = "801",grader= True, assigned_ta = "TA apporv")
         self.section.save()
 
     def test_section_page(self):
