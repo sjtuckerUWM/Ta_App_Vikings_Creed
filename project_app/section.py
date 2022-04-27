@@ -3,11 +3,11 @@ from project_app.TA import TA
 
 class Section:
     # class variables
-    TA = TA()
-    courseNum = 0
-    hasLab = False
-    sectNum = 0
-    meetingInfo = ""
+    # TA = TA()
+    # courseNum = 0
+    # hasLab = False
+    # sectNum = 0
+    # meetingInfo = ""
 
     def __init__(self):
         pass

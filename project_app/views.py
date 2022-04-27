@@ -39,8 +39,8 @@ class Home(View):
 
 class AccountManagement(View):
     def get(self, request):
-        emails = []
-        return render(request, "accountManagement.html", {"emails": emails})
+        users = list(UserModel.objects.all())
+        return render(request, "accountManagement.html", {"users": users})
 
 
 class AddAccount(View):
@@ -48,7 +48,8 @@ class AddAccount(View):
         return render(request, "addAccountPage.html")
 
     def post(self, request):
-        driver = request.session["driver"]
+        driver = Driver(request.session["currentUser"])
+        id = request.POST['id']
         email = request.POST['email']
         password = request.POST['password']
         name = request.POST['name']
@@ -56,6 +57,6 @@ class AddAccount(View):
         phoneNum = request.POST['phoneNum']
         role = request.POST['role']
 
-        driver.addAccount(self, email, password, name, address, phoneNum, role)
+        driver.addAccount(id, email, password, name, address, phoneNum, role)
 
-        return redirect("accountManagement.html")
+        return redirect("/accounts")
