@@ -4,23 +4,26 @@ from project_app.models import UserModel, CourseModel, SectionModel
 
 class MyTestLogIn(TestCase):
     def setUp(self):
-        self.user = UserModel.objects.create(name="Group3", password="Vikings")
+        # self.user = UserModel.objects.create(name="", email="Group3", password="Vikings", address="", role=0)
+        self.client = Client()
+        self.user = UserModel(name="", email="Group3", password="Vikings", address="", role=0)
+        self.user.save()
 
     def test_LogIn_valid(self):
-        response = self.client.post('/', {'name': 'Group3', 'password': 'Vikings'})
-        self.assertEqual(response.url, '/homepage')
+        response = self.client.post('/', {'email': 'Group3', 'password': 'Vikings'})
+        self.assertEqual(response.url, '/homePage/')
 
     def test_LogIn_invalid(self):
-        response = self.client.post('/', {'name': 'Group3', 'password': 'Vitkings'})
-        self.assertEqual(response.context['message'], 'Invalid password')
+        response = self.client.post('/', {'email': 'Group3', 'password': 'Vitkings'})
+        self.assertEqual(response.context['message'], 'bad password')
 
     def test_LogIn_Null_User(self):
-        response = self.client.post('/', {'name': '', 'password': 'Vikings'})
-        self.assertEqual(response.context['message'], 'No user name entered')
+        response = self.client.post('/', {'email': '', 'password': 'Vikings'})
+        self.assertEqual(response.context['message'], 'email is not registered')
 
     def test_LogIn_Null_password(self):
-        response = self.client.post('/', {'name': 'Group3', 'password': ''})
-        self.assertEqual(response.context['message'], 'No user password entered')
+        response = self.client.post('/', {'email': 'Group3', 'password': ''})
+        self.assertEqual(response.context['message'], 'bad password')
 
 
 class MyTestCreate(TestCase):
