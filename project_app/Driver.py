@@ -6,11 +6,11 @@ from project_app.section import Section
 from project_app.models import UserModel, CourseModel, SectionModel
 
 class Driver(object):
-    def __init__(self):
-        self.currentAccount = None
+    def __init__(self, currentAccount=None):
+        self.currentAccount = currentAccount
         self.accountList = {}
         self.courseList = {}
-        self.addAccount(1, "email@a.com", "pass", "Test User", "USA", "123-456-7890", 0)
+        # self.addAccount(1, "email@a.com", "pass", "Test User", "USA", "123-456-7890", 0)
         self.fillAccounts()
         # to see if logIn works VVV
         # self.addAccount(1, "email@a.com", "pass", "Test User", "USA", "123-456-7890", 0)
@@ -34,6 +34,7 @@ class Driver(object):
                 self.accountList[entry.email] = (TA(entry.user_id, entry.email, entry.password, entry.name, entry.address, entry.phone_number))
 
     def logIn(self, email, password):
+        # if self.currentAccount != None: return RuntimeError
         try:
             m = UserModel.objects.get(email=email)
             if UserModel.objects.get(email=email).password == password:

@@ -2,10 +2,11 @@ from project_app.user import User
 
 
 class Instructor(User):
-    courseList = []
 
-    def __init__(self):
-        pass
+
+    def __init__(self, id, email, password, name, address, phoneNum):
+        User.__init__(self, id, email, password, name, address, phoneNum)
+        self.courseList = []
 
     def getCourseList(self):
         return self.courseList
