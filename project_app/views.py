@@ -49,7 +49,7 @@ class AddAccount(View):
 
     def post(self, request):
         driver = Driver(request.session["currentUser"])
-
+        id = request.POST['id']
         email = request.POST['email']
         password = request.POST['password']
         name = request.POST['name']
@@ -57,6 +57,6 @@ class AddAccount(View):
         phoneNum = request.POST['phoneNum']
         role = request.POST['role']
 
-        driver.addAccount(1, email, password, name, address, phoneNum, role)
+        driver.addAccount(id, email, password, name, address, phoneNum, role)
 
-        return redirect("accountManagement.html")
+        return redirect("/accounts")
