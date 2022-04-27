@@ -39,7 +39,7 @@ class Home(View):
 
 class AccountManagement(View):
     def get(self, request):
-        emails = list(map(UserModel.email))
+        emails = []
         return render(request, "accountManagement.html", {"emails": emails})
 
 
