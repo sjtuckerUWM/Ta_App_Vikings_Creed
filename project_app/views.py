@@ -63,4 +63,11 @@ class AddAccount(View):
 
 
 class DeleteAccount(View):
-    pass
+    def get(self, request, id):
+        print(str(id))
+        return render(request, "deleteAccountPage.html")
+
+    def post(self, request, id):
+        driver = Driver(request.session["currentUser"])
+        driver.deleteAccount(id)
+        return redirect("/accounts")
