@@ -73,10 +73,9 @@ class Driver(object):
         added.save()
         return a
 
-    def deleteAccount(self, accountIndex):
-        UserModel.objects.get(user_id=self.accountList.__getitem__(accountIndex)).delete()
-        UserModel.save()
-        self.accountList.pop(accountIndex)
+    def deleteAccount(self, ID):
+        UserModel.objects.get(user_id=ID).delete()
+
 
     def addCourse(self, courseid, coursename):
         # Precondition: Course parameters are valid
