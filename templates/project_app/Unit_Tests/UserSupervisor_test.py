@@ -1,4 +1,4 @@
-from project_app.supervisor import Supervisor
+from templates.project_app.supervisor import Supervisor
 
 import unittest
 

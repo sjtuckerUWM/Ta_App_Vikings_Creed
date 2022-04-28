@@ -1,7 +1,7 @@
 from django.contrib import admin
-from project_app.models import UserModel
-from project_app.models import CourseModel
-from project_app.models import SectionModel
+from templates.project_app.models import UserModel
+from templates.project_app.models import CourseModel
+from templates.project_app.models import SectionModel
 
 
 # Register your models here.

@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from project_app.models import UserModel
-from project_app.Driver import Driver
+from templates.project_app.models import UserModel
+from templates.project_app.Driver import Driver
+from django.views.generic.edit import DeleteView
 
 
 driver = Driver()
@@ -62,5 +63,10 @@ class AddAccount(View):
         return redirect("/accounts")
 
 
-class DeleteAccount(View):
-    pass
+
+
+class DeleteAccount(DeleteView):
+
+    model = UserModel
+    success_url = "/"
+

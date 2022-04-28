@@ -1,6 +1,6 @@
 import unittest
-from project_app.TA import TA
-from project_app.section import Section
+from templates.project_app.TA import TA
+from templates.project_app.section import Section
 
 
 class MyTestCase(unittest.TestCase):

@@ -1,4 +1,4 @@
-from project_app.user import User
+from templates.project_app.user import User
 
 
 class Supervisor(User):

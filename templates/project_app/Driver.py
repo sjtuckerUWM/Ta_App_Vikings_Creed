@@ -1,9 +1,8 @@
-from project_app.supervisor import Supervisor
-from project_app.instructor import Instructor
-from project_app.TA import TA
-from project_app.course import Course
-from project_app.section import Section
-from project_app.models import UserModel, CourseModel, SectionModel
+from templates.project_app.supervisor import Supervisor
+from templates.project_app.instructor import Instructor
+from templates.project_app.TA import TA
+from templates.project_app.models import UserModel
+
 
 class Driver(object):
     def __init__(self, currentAccount=None):

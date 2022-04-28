@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from project_app.models import UserModel, CourseModel, SectionModel
+from templates.project_app.models import UserModel, CourseModel, SectionModel
 
 
 class MyTestLogIn(TestCase):
