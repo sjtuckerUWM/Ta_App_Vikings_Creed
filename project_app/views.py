@@ -60,3 +60,7 @@ class AddAccount(View):
         driver.addAccount(id, email, password, name, address, phoneNum, role)
 
         return redirect("/accounts")
+
+
+class DeleteAccount(View):
+    pass
