@@ -56,10 +56,25 @@ class AddAccount(View):
         address = request.POST['address']
         phoneNum = request.POST['phoneNum']
         role = request.POST['role']
+        verify = driver.addAccount(id, email, password, name, address, phoneNum, role)
+        if verify == ["","","","","","",""]:
+            return redirect("/accounts")
+        values = {
+            'id': request.POST['id'],
+            'email': request.POST['email'],
+            'password': request.POST['password'],
+            'name': request.POST['name'],
+            'address': request.POST['address'],
+            'phoneNum': request.POST['phoneNum'],
+            'v_id': verify[0],
+            'v_email': verify[1],
+            'v_password': verify[2],
+            'v_name': verify[3],
+            'v_address': verify[4],
+            'v_phoneNum': verify[5],
+        }
+        return render(request, "mainTemplates/addAccountPage.html", values)
 
-        driver.addAccount(id, email, password, name, address, phoneNum, role)
-
-        return redirect("/accounts")
 
 
 class DeleteAccount(View):
