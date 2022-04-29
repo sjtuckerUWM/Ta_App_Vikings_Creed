@@ -23,5 +23,5 @@ urlpatterns = [
     path('home/', Home.as_view()),
     path('accounts/', AccountManagement.as_view()),
     path('addAccount/', AddAccount.as_view()),
-    path('deleteAccount/<int:id>', DeleteAccount.as_view())
+    path('deleteAccount/<int:id>/', DeleteAccount.as_view())
 ]
