@@ -1,7 +1,54 @@
-
-from project_app.Driver import Driver
 import unittest
+from django.test import TestCase
+from project_app.Driver import Driver
 
+
+# Params: id, email, password, name, address, phoneNum, role
+class TestAddAccount(TestCase):
+    def test_add_Instructor(self):
+        a = Driver()
+        self.assertEqual(a.addAccount("1", "Instructor@test.com", "pass1234", "Test", "USA", "123-456-7890", 1),
+                         ["", "", "", "", "", "", ""])
+
+    def test_add_Instructor2(self):
+        a = Driver()
+        self.assertEqual(a.addAccount("2", "Instructor2@test.com", "pass1234", "Test", "USA", "123-456-7890", 1),
+                         ["", "", "", "", "", "", ""])
+
+    def test_add_Instructor3(self):
+        a = Driver()
+        self.assertEqual(a.addAccount("3", "Instructor3@test.com", "pass1234", "Test", "USA", "123-456-7890", 1),
+                         ["", "", "", "", "", "", ""])
+
+    def test_add_TA(self):
+        a = Driver()
+        self.assertEqual(a.addAccount("4", "TA@test.com", "pass1234", "Test Two", "USA", "123-456-7890", 2),
+                         ["", "", "", "", "", "", ""])
+
+    def test_add_TA2(self):
+        a = Driver()
+        self.assertEqual(a.addAccount("5", "TA@test2.com", "pass1234", "Test Two", "USA", "123-456-7890", 2),
+                         ["", "", "", "", "", "", ""])
+
+    def test_add_TA3(self):
+        a = Driver()
+        self.assertEqual(a.addAccount("6", "TA@test3.com", "pass1234", "Test Two", "USA", "123-456-7890", 2),
+                         ["", "", "", "", "", "", ""])
+
+    def test_add_Supervisor(self):
+        a = Driver()
+        self.assertEqual(a.addAccount("7", "Supervisor@test.com", "pass1234", "Test Three", "USA", "123-456-7890", 0),
+                         ["", "", "", "", "", "", ""])
+
+    def test_add_Supervisor2(self):
+        a = Driver()
+        self.assertEqual(a.addAccount("8", "Supervisor2@test.com", "pass1234", "Test Three", "USA", "123-456-7890", 0),
+                         ["", "", "", "", "", "", ""])
+
+    def test_add_Supervisor3(self):
+        a = Driver()
+        self.assertEqual(a.addAccount("9", "Supervisor3@test.com", "pass1234", "Test Three", "USA", "123-456-7890", 0),
+                         ["", "", "", "", "", "", ""])
 
 
 class TestCourseList(unittest.TestCase):
@@ -41,6 +88,7 @@ class TestDeleteCourse(unittest.TestCase):
     def test_default(self):
         a = Driver()
         self.assertTrue(a.deleteCourse_(123))
+
 
 class TestaddSection(unittest.TestCase):
     def setup(self):
