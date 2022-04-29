@@ -1,17 +1,30 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h1>Log In</h1>
-<form action="/" method="post">
-    {% csrf_token %}
-    <table>
-        <tr><td>Email: </td></tr>
-        <tr><td><input type="text" name="email"></td></tr>
-        <tr><td>Password: </td></tr>
-        <tr><td><input type="password" name="password"></td></tr>
-        <tr><td>{{ message }}</td></tr>
-        <tr><td><input type="submit"></td></tr>
-    </table>
-
-</form>
+  <div class="container mt-5 pt-5">
+      <div class="row">
+          <div class="col-7 col-sn-8 col-nd-6 m-auto">
+              <div class="card text-dark bg-light">
+                  <div class="card-body col-8 m-auto">
+                      {% load static %}
+                      <img class="mx-auto d-block pt-5" src="{% static 'images/uwmLogo.jpg' %}" alt="UWM LOGO" style="width: 300px; height: auto">
+                      <div class="text-center">
+                          <h2>TA MANAGEMENT APP</h2>
+                      </div>
+                      <form action="/" method="post">
+                          <label style="font-size: 24px" for="email" class="px-3">Email</label>
+                          <input style="border-radius: 45px" type="text" name="email" class="form-control my-2 py-2" placeholder="Email">
+                          <label style="font-size: 24px" for="password" class="px-3">Password</label>
+                          <input style="border-radius: 45px" type="password" name="password" class="form-control my-2 py-2" placeholder="Password">
+                          <div class="text-center mt-3">
+                              {{ message }}
+                          </div>
+                          <div class="text-center mt-3 py-3">
+                              <input style="font-size: 24px" type="submit" value=" Login " class="rounded btn-dark">
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 {% endblock %}
