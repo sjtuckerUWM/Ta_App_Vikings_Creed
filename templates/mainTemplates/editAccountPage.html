@@ -2,56 +2,66 @@
 
 {% block content %}
 <h1>Edit Account</h1>
-<form action="/action_page.php">
-    <table style="width:100%">
-        <tr><td>
-            <label for="email">Email</label>
-        </td></tr>
-        <tr><td>
-            <input name="email" type="text" />
-        </td></tr>
-        <tr><td>
-            <label for="password">Password</label>
-        </td></tr>
-        <tr><td>
-            <input name="password" type="password" />
-        </td></tr>
-        <tr><td>
-            <label for="name">Name</label>
-        </td></tr>
-        <tr><td>
-            <input name="name" type="text" />
-        </td></tr>
-        <tr><td>
-            <label for="address">Address</label>
-        </td></tr>
-        <tr><td>
-            <input name="address" type="text" />
-        </td></tr>
-        <tr><td>
-            <label for="role">Role</label>
-        </td></tr>
+<form method="POST">
+    {% csrf_token %}
+    <table>
         <tr>
-            <td>
-                <input type="radio" id="html" name="role" value="supervisor">
-                <label for="supervisor">Supervisor</label>
-            </td>
+            <td><label for="id">User ID</label></td>
         </tr>
         <tr>
-            <td>
-                <input type="radio" id="css" name="role" value="instructor">
-                <label for="css">Instructor</label>
-            </td>
+            <td><input name="id" type="text" value="{{ id }}"/></td>
+            <td>{{ v_id }}</td>
+        </tr>
+
+        <tr>
+            <td><label for="email">Email</label></td>
         </tr>
         <tr>
-            <td>
-                <input type="radio" id="javascript" name="role" value="ta">
-                <label for="ta">TA</label>
-            </td>
+            <td><input name="email" type="text" value="{{ email }}" /></td>
+            <td>{{ v_email }}</td>
         </tr>
-        <tr><th>
-            <input type="submit" value="Submit" />
-        </th></tr>
+
+        <tr>
+            <td><label for="password">Password</label></td>
+
+        </tr>
+        <tr>
+            <td><input name="password" type="text" value="{{ password }}" /></td>
+            <td>{{ v_password }}</td>
+        </tr>
+
+        <tr>
+            <td><label for="name">Name</label></td>
+        </tr>
+        <tr>
+            <td><input name="name" type="text"  value="{{ name }}"  /></td>
+            <td>{{ v_name }}</td>
+        </tr>
+
+        <tr>
+            <td><label for="address">Address</label></td>
+        </tr>
+        <tr>
+            <td><input name="address" type="text" value="{{ address }}" /></td>
+            <td>{{ v_address }}</td>
+        </tr>
+
+        <tr>
+            <td><label for="phoneNum">Phone Number</label></td>
+        </tr>
+        <tr>
+            <td><input name="phoneNum" type="text" value="{{ phoneNum }}" /></td>
+            <td>{{ v_phoneNum }}</td>
+
+        </tr>
+
+        <tr>
+            <td>Role</td>
+        </tr>
+        <tr>
+            <td>{{ role }}</td>
+        </tr>
     </table>
+    <input type="submit" value="Submit" />
 </form>
 {% endblock %}

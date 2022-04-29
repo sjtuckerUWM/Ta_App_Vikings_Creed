@@ -47,19 +47,27 @@ class Driver(object):
 
 
     def addAccount(self, id, email, password, name, address, phoneNum, role):
-        a = ["","","","",""]
-        if (re.search("+[0-9]]", id)==None) or int(id) > 99999 or int(id) < 0: a[0] = "Invalid, integer between 0 and 99999"
-        if (re.search("^(+\w@+[0-9a-z]\.)", email) == None) or (len(str(email))>99): a[1] =  "Invalid"
+        a = ["","","","","","",""]
+        if (re.findall("[1-9][0-9]*", id) != [id]) or int(id)>9999 : a[0] = "Invalid, integer between 0 and 9999"
+        else:
+            try:
+                m = UserModel.objects.get(user_id=id)
+                a[0] = "Invalid, ID already in use by " + m.email
+            except:
+                pass
+        if (re.findall("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", email) != [email]) or (len(str(email))>99): a[1] =  "Invalid"
+        else:
+            try:
+                m = UserModel.objects.get(email=email)
+                a[1] = "Invalid, Email already in use by " + m.name
+            except:
+                pass
         if (len(str(password))<8) or (len(str(password))>19): a[2] =  "Invalid, 8 or more characters"
-        if (re.search("\D", name) == None) or (len(str(name))>49): a[3] =  "Invalid, can't contain digits"
+        if (re.search("\d", name) != None) or (len(str(name))>49) or (len(str(name))<1): a[3] =  "Invalid, can't contain digits"
         if (len(str(address))<3) or (len(str(address))>99): a[4] =  "Invalid, length should be >= 3 and < 100"
-        if (re.search("({3}[0-9]\-{3}[0-9]\-{4}[0-9])|({10}[0-9])", phoneNum) == None): a[5] =  "Invalid, Format should be: \"123-456-7890\" OR \"1234567890\""
-
-
-
-
-
-
+        if (re.findall("[0-9]{3}\-[0-9]{3}\-[0-9]{4}|[0-9]{10}", phoneNum) != [phoneNum]): a[5] =  "Invalid, Format should be: \"123-456-7890\" OR \"1234567890\""
+        if a != ["","","","","","",""]:
+            return a
 
         if(role == 0) :
             self.accountList[email] = (Supervisor(id, email, password, name, address, phoneNum))
@@ -76,6 +84,45 @@ class Driver(object):
     def deleteAccount(self, ID):
         UserModel.objects.get(user_id=ID).delete()
 
+
+    def editAccount(self, oldID, id, email, password, name, address, phoneNum, role):
+        a = ["", "", "", "", "", "", ""]
+        if (re.findall("[1-9][0-9]*", id) != [id]) or int(id) > 9999:
+            a[0] = "Invalid, integer between 0 and 9999"
+        elif(int(id)!=oldID):
+            try:
+                m = UserModel.objects.get(user_id=id)
+                a[0] = "Invalid, ID already in use by " + m.email
+            except:
+                pass
+        if (re.findall("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", email) != [email]) or (len(str(email)) > 99):
+            a[1] = "Invalid"
+        elif(UserModel.objects.get(user_id=oldID).email!=email):
+            try:
+                m = UserModel.objects.get(email=email)
+                a[1] = "Invalid, Email already in use by " + m.name
+            except:
+                pass
+        if (len(str(password)) < 8) or (len(str(password)) > 19): a[2] = "Invalid, 8 or more characters"
+        if (re.search("\d", name) != None) or (len(str(name)) > 49) or (len(str(name)) < 1): a[
+            3] = "Invalid, can't contain digits"
+        if (len(str(address)) < 3) or (len(str(address)) > 99): a[4] = "Invalid, length should be >= 3 and < 100"
+        if (re.findall("[0-9]{3}\-[0-9]{3}\-[0-9]{4}|[0-9]{10}", phoneNum) != [phoneNum]): a[
+            5] = "Invalid, Format should be: \"123-456-7890\" OR \"1234567890\""
+        if a != ["", "", "", "", "", "", ""]:
+            return a
+        self.deleteAccount(oldID)
+        if (role == 0):
+            self.accountList[email] = (Supervisor(id, email, password, name, address, phoneNum))
+
+        elif (role == 1):
+            self.accountList[email] = (Instructor(id, email, password, name, address, phoneNum))
+        elif (role == 2):
+            self.accountList[email] = (TA(id, email, password, name, address, phoneNum))
+
+        added = UserModel(id, name, email, password, address, phoneNum, role)
+        added.save()
+        return a
 
     def addCourse(self, courseid, coursename):
         # Precondition: Course parameters are valid
