@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Account</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
 <h1>Add Account</h1>
 <form action="/addAccount/" method="post">
     {% csrf_token %}
@@ -70,5 +66,4 @@
         </th></tr>
     </table>
 </form>
-</body>
-</html>
+{% endblock %}

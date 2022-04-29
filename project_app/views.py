@@ -10,7 +10,7 @@ driver = Driver()
 # Create your views here.
 class Login(View):
     def get(self, request):
-        return render(request, "loginPage.html")
+        return render(request, "mainTemplates/loginPage.html")
 
     def post(self, request):
 
@@ -21,31 +21,31 @@ class Login(View):
         outcome = driver.logIn(email, password)
 
         if outcome == 0:
-            return render(request, "loginPage.html", {"message": "email is not registered"})
+            return render(request, "mainTemplates/loginPage.html", {"message": "email is not registered"})
         elif outcome == 1:
-            return render(request, "loginPage.html", {"message": "bad password"})
+            return render(request, "mainTemplates/loginPage.html", {"message": "bad password"})
         elif outcome == 2:
 
             request.session["currentUser"] = driver.getCurrentAccount().getEmail()
             return redirect('/home/')  # place url from url.py
         else:
-            return render(request, "loginPage.html", {"message": "login error"})
+            return render(request, "mainTemplates/loginPage.html", {"message": "login error"})
 
 
 class Home(View):
     def get(self, request):
-        return render(request, "homePage.html")
+        return render(request, "mainTemplates/homePage.html")
 
 
 class AccountManagement(View):
     def get(self, request):
         users = list(UserModel.objects.all())
-        return render(request, "accountManagement.html", {"users": users})
+        return render(request, "mainTemplates/accountManagement.html", {"users": users})
 
 
 class AddAccount(View):
     def get(self, request):
-        return render(request, "addAccountPage.html")
+        return render(request, "mainTemplates/addAccountPage.html")
 
     def post(self, request):
         driver = Driver(request.session["currentUser"])
@@ -65,7 +65,7 @@ class AddAccount(View):
 class DeleteAccount(View):
     def get(self, request, id):
         print(str(id))
-        return render(request, "deleteAccountPage.html")
+        return render(request, "mainTemplates/deleteAccountPage.html")
 
     def post(self, request, id):
         driver = Driver(request.session["currentUser"])
