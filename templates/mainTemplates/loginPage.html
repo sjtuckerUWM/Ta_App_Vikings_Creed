@@ -1,16 +1,17 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
   <div class="container mt-5 pt-5">
       <div class="row">
           <div class="col-7 col-sn-8 col-nd-6 m-auto">
               <div class="card text-dark bg-light">
-                  <div class="card-body col-8 m-auto">
-                      {% load static %}
-                      <img class="mx-auto d-block pt-5" src="{% static 'images/uwmLogo.jpg' %}" alt="UWM LOGO" style="width: 300px; height: auto">
+                  <div class="card-body col-8 m-auto"/>
+                      <img class="mx-auto d-block pt-5" src="{% static 'TA_APP/uwmLogo.jpg' %}" alt="UWM LOGO" style="width: 300px; height: auto">
                       <div class="text-center">
                           <h2>TA MANAGEMENT APP</h2>
                       </div>
                       <form action="/" method="post">
+                          {% csrf_token %}
                           <label style="font-size: 24px" for="email" class="px-3">Email</label>
                           <input style="border-radius: 45px" type="text" name="email" class="form-control my-2 py-2" placeholder="Email">
                           <label style="font-size: 24px" for="password" class="px-3">Password</label>
