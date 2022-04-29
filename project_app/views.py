@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views import View
+
+from project_app.instructor import Instructor
 from project_app.models import UserModel
 from project_app.Driver import Driver
-
+from project_app.supervisor import Supervisor
+from project_app.TA import TA
 
 driver = Driver()
 
@@ -86,3 +89,71 @@ class DeleteAccount(View):
         driver = Driver(request.session["currentUser"])
         driver.deleteAccount(id)
         return redirect("/accounts")
+
+class EditAccount(View):
+    def get(self, request, id):
+        print(str(id))
+        driver = Driver(request.session["currentUser"])
+        account = driver.accountList[UserModel.objects.get(user_id=id).email]
+        verify = ["", "", "", "", "", "", ""]
+        roleStr = ""
+        role = UserModel.objects.get(user_id=id).role
+        request.session['editRole'] = role
+
+        if(role == 0):
+            roleStr = "Supervisor"
+        elif(role == 1):
+            roleStr = "Instructor"
+        elif(role == 2):
+            roleStr = "TA"
+        request.session['editRoleString'] = roleStr
+        values = {
+            'id': account.getID(),
+            'email': account.getEmail(),
+            'password': account.getPassword(),
+            'name': account.getName(),
+            'address': account.getAddress(),
+            'phoneNum': account.getPhoneNum(),
+            'role': roleStr,
+            'v_id': verify[0],
+            'v_email': verify[1],
+            'v_password': verify[2],
+            'v_name': verify[3],
+            'v_address': verify[4],
+            'v_phoneNum': verify[5],
+        }
+        return render(request, "mainTemplates/editAccountPage.html", values)
+
+    def post(self, request, id):
+        oldID = id
+        driver = Driver(request.session["currentUser"])
+        inputID = request.POST['id']
+        email = request.POST['email']
+        password = request.POST['password']
+        name = request.POST['name']
+        address = request.POST['address']
+        phoneNum = request.POST['phoneNum']
+        role = request.session['editRole']
+        verify = driver.editAccount(oldID, inputID, email, password, name, address, phoneNum, role)
+        if verify == ["", "", "", "", "", "", ""]:
+            return redirect("/accounts")
+
+        roleStr = request.session['editRoleString']
+
+
+        values = {
+            'id': request.POST['id'],
+            'email': request.POST['email'],
+            'password': request.POST['password'],
+            'name': request.POST['name'],
+            'address': request.POST['address'],
+            'phoneNum': request.POST['phoneNum'],
+            'role': roleStr,
+            'v_id': verify[0],
+            'v_email': verify[1],
+            'v_password': verify[2],
+            'v_name': verify[3],
+            'v_address': verify[4],
+            'v_phoneNum': verify[5],
+        }
+        return render(request, "mainTemplates/editAccountPage.html", values)
