@@ -25,5 +25,5 @@ urlpatterns = [
     path('addAccount/', AddAccount.as_view()),
     path('deleteAccount/<int:id>/', DeleteAccount.as_view()),
     path('editAccount/<int:id>/', EditAccount.as_view()),
-    path('home/courseManagement.html/', ManageCourse.as_view()),
+    path('courses/', ManageCourse.as_view()),
 ]
