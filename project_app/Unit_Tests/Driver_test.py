@@ -37,8 +37,38 @@ class TestAddAccount(TestCase):
 
 
 class TestEditAccount(TestCase):
-    def test_edit_acc(self):
+    def test_edit_Instructor(self):
         a = Driver()
+        a.addAccount("1", "Instructor@test.com", "pass1234", "test", "USA", "123-456-7890", 1)
+        self.assertEqual(a.editAccount("1", "2", "Instructor@test.com", "pass1234", "test", "USA", "123-456-7890", 1),
+                         ["", "", "", "", "", "", ""])
+
+    def test_edit_TA(self):
+        a = Driver()
+        a.addAccount("3", "TA@test.com", "pass1234", "test", "USA", "123-456-7890", 2)
+        self.assertEqual(a.editAccount("3", "4", "TA@test.com", "pass1234", "test", "USA", "123-456-7890", 2),
+                         ["", "", "", "", "", "", ""])
+
+    def test_edit_Supervisor(self):
+        a = Driver()
+        a.addAccount("5", "Supervisor@test.com", "pass1234", "test", "USA", "123-456-7890", 0)
+        self.assertEqual(a.editAccount("5", "6", "Supervisor@test.com", "pass1234", "test", "USA", "123-456-7890", 0),
+                         ["", "", "", "", "", "", ""])
+
+    def test_add_wrong_type(self):
+        a = Driver()
+        with self.assertRaises(TypeError, msg="invalid argument"):
+            a.editAccount(1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+    def test_add_too_few_args(self):
+        a = Driver()
+        with self.assertRaises(TypeError, msg="too few arguments"):
+            a.editAccount("test")
+
+    def test_add_too_many_args(self):
+        a = Driver()
+        with self.assertRaises(TypeError, msg="too many arguments"):
+            a.editAccount("", "", "", "", "", "", "", "", "", 0)
 
 
 # 6 strings added when done, int: courseId, string: courseName
