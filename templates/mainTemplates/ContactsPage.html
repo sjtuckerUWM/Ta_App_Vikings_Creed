@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+ <h1>Contacts</h1>
+
+<h2>Accounts</h2>
+    <table>
+      <tr>
+        <th>Supervisor</th>
+        <th>Emails</th>
+        <th>Phone Number</th>
+      </tr>
+        {% for i in supervisors %}
+            <tr>
+                <td>{{i.name}}</td>
+                <td>{{i.email}}</td>
+                <td>{{i.phoneNum}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <table>
+      <tr>
+        <th>Instructor</th>
+        <th>Emails</th>
+        <th>Phone Number</th>
+      </tr>
+        {% for i in instructors %}
+            <tr>
+                <td>{{i.name}}</td>
+                <td>{{i.email}}</td>
+                <td>{{i.phoneNum}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <table>
+      <tr>
+        <th>TA</th>
+        <th>Emails</th>
+        <th>Phone Number</th>
+      </tr>
+        {% for i in TA %}
+            <tr>
+                <td>{{i.name}}</td>
+                <td>{{i.email}}</td>
+                <td>{{i.phoneNum}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
