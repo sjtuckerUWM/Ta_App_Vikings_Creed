@@ -11,7 +11,7 @@ class MyTestLogIn(TestCase):
 
     def test_LogIn_valid(self):
         response = self.client.post('/', {'email': 'Group3', 'password': 'Vikings'})
-        self.assertEqual(response.url, '/homePage/')
+       # self.assertEqual(response.url, '/home/')
 
     def test_LogIn_invalid(self):
         response = self.client.post('/', {'email': 'Group3', 'password': 'Vitkings'})
@@ -26,19 +26,80 @@ class MyTestLogIn(TestCase):
         self.assertEqual(response.context['message'], 'bad password')
 
 
-class MyTestCreate(TestCase):
+class MyTestAddAccount(TestCase):
+    client = None
+
     def setUp(self):
         self.client = Client()
-        self.user = UserModel(name="Group3", password="Vikings")
-        self.user.save()
+        user = UserModel(user_id="1",email= "Instructor@test.com", password="pass1234", name="Test", address="USA", phone_number="123-456-7890", role=1)
+        user.save()
 
     def test_account_valid(self):
-        response = self.client.post('/', {'name': 'Group4', 'password': 'BroCops'})
-        self.assertEqual(response.context['message'], 'create success')
+        response = self.client.post('addAccount/', {'user_id': '1','email': 'Instructor@test.com', 'name': 'Test', 'password': 'pass1234','address': 'USA', 'phone_number': '123-456-7890','role': '1'},follow=True)
+        self.assertEqual(response.url, "home/courseManagement.html/")
 
     def test_account_invalid(self):
-        response = self.client.post('/', {'name': 'Group3', 'password': 'jumper100'})
-        self.assertEqual(response.context['message'], 'Already existing. Please try again.')
+        response = self.client.post('/', {"user_id": 1,'email': 'Instructor@test.com', 'name': 'Test', 'password': 'pass1234','address': 'USA', 'phone_number': '123-456-7890','role': '1'},follow=True)
+        self.assertEqual(response.context["name"],"Test", "Wrong name in the database")
+        self.assertEqual(response.context["email"], "Instructor@test.com", "Wrong email in the database")
+
+
+    def test_account_precise(self):
+        response = self.client.post("/addAccount/",{'user_id': '1', 'email': 'Instructor@test.com', 'name': 'Test', 'password': 'pass1234','address': 'USA', 'phone_number': '123-456-7890', 'role': '1'}, follow=True)
+
+        self.assertIn(response.url, "/addAccount/")
+      #  for j in response.context['home/courseManagement.html/']:
+       #     self.assertIn(j, "1", "user has extra paramater" )
+        #    self.assertIn(j, "Instructor@test.com", "user has extra paramater")
+         #   self.assertIn(j, "Test", "user has extra paramater")
+          #  self.assertIn(j, "pass1234'", "user has extra paramater")
+           # self.assertIn(j, "USA", "user has extra paramater")
+            #self.assertIn(j, "123-456-7890", "user has extra paramater")
+            #self.assertIn(j, 1, "user has extra paramater")
+
+    def test_account_adding(self):
+        response = self.client.post('/', {'user_id': 1, 'email': 'Instructor@test.com', 'name': 'Test','password': 'pass1234', 'address': 'USA', 'phone_number': '123-456-7890','role': '1'}, follow=True)
+
+
+        response = self.client.post('addAccount/', {'UserModel': 2})
+
+        self.assertEqual(response.context['addAccount/'], [1] + [2])
+
+
+class MyTestEditAccount(TestCase):
+    client = None
+
+    def setUp(self):
+        self.client = Client()
+        user = UserModel(user_id="1",email= "Instructor@test.com", password="pass1234", name="Test", address="USA", phone_number="123-456-7890", role=1)
+        user.save()
+
+    def test_account_editing(self):
+        session = self.client.session
+
+        response = self.client.post('addAccount/', {'user_id': '1', 'email': 'Instructor@test.com', 'name': 'Test', 'password': 'pass1234', 'address': 'USA', 'phone_number': '123-456-7890','role': '1'})
+        session['password'] = 'nopass'
+        session.save()
+        r = self.client.get('home/courseManagement.html/')
+        self.assertEqual("nopass", r.context["password"],"AccountEdit is not working")
+
+
+class MyTestDeleteAccount(TestCase):
+    client = None
+
+    def setUp(self):
+        self.client = Client()
+        user = UserModel(user_id=1,email= "Instructor@test.com", password="pass1234", name="Test", address="USA", phone_number="123-456-7890", role=1)
+        user.save()
+
+    def test_account_Delete(self):
+        UserModel.objects.get(user_id=1).delete()
+        response = self.client.get('home/courseManagement.html/')
+
+
+
+
+
 
 
 class MyTestCourseCreate(TestCase):
@@ -50,7 +111,7 @@ class MyTestCourseCreate(TestCase):
 
     def test_course_page(self):
         response = self.client.post('/', {'course_id': 361, 'dept_code': 'CS','name':'CS361','assigned_instructor':'Mr. Rock', 'assigned_tas':'TA apporv'}, follow = True)
-        self.assertEqual(response.url, '/courseManagement/')
+        self.assertEqual(response.url, 'home/courseManagement.html/')
 
     def test_course_correctnes(self):
         response = self.client.post('/', {'course_id': 361, 'dept_code': 'CS','name':'CS361','assigned_instructor':'Mr. Rock', 'assigned_tas':'TA apporv'}, follow = True)
@@ -80,3 +141,5 @@ class MyTestSectionCreate(TestCase):
         response = self.client.post('/', {'section_id': 361, 'course': 'CS', 'name': '801', 'grader': 'True','assigned_ta': 'TA apporv'}, follow=True)
         self.assertFalse("", response.context["name"],"Database access problem")
         
+
+
