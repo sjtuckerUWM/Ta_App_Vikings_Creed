@@ -166,6 +166,7 @@ class Driver(object):
         course.assigned_instructor = instructor_id
         for i in ta_ids:
             course.assigned_tas.add(i)
+        course.save()
 
 
 
