@@ -61,7 +61,7 @@ class AddAccount(View):
         role = request.POST['role']
         verify = driver.addAccount(id, email, password, name, address, phoneNum, role)
         if verify == ["","","","","","",""]:
-            return redirect("/accounts")
+            return redirect("/accounts/")
         values = {
             'id': request.POST['id'],
             'email': request.POST['email'],
