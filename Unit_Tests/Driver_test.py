@@ -1,6 +1,6 @@
 from django.test import TestCase
-from project_app.Driver import Driver
-from project_app.models import UserModel
+from classes.Driver import Driver
+from proj_app.models import MyUserModel
 
 
 # Params: id, email, password, name, address, phoneNum, role
@@ -76,22 +76,22 @@ class TestDeleteAccount(TestCase):
         a = Driver()
         a.addAccount("24", "Instructor@test.com", "pass1234", "test", "USA", "123-456-7890", 1)
         a.deleteAccount(24)
-        with self.assertRaises(UserModel.DoesNotExist, msg=""):
-            UserModel.objects.get(user_id=24)
+        with self.assertRaises(MyUserModel.DoesNotExist, msg=""):
+            MyUserModel.objects.get(user_id=24)
 
     def test_delete_TA(self):
         a = Driver()
         a.addAccount("3", "TA@test.com", "pass1234", "test", "USA", "123-456-7890", 2)
         a.deleteAccount(3)
-        with self.assertRaises(UserModel.DoesNotExist, msg=""):
-            UserModel.objects.get(user_id=3)
+        with self.assertRaises(MyUserModel.DoesNotExist, msg=""):
+            MyUserModel.objects.get(user_id=3)
 
     def test_delete_Supervisor(self):
         a = Driver()
         a.addAccount("5", "Supervisor@test.com", "pass1234", "test", "USA", "123-456-7890", 0)
         a.deleteAccount(5)
-        with self.assertRaises(UserModel.DoesNotExist, msg=""):
-            UserModel.objects.get(user_id=3)
+        with self.assertRaises(MyUserModel.DoesNotExist, msg=""):
+            MyUserModel.objects.get(user_id=3)
 
     def test_delete_wrong_type(self):
         a = Driver()
@@ -145,22 +145,22 @@ class TestDeleteCourse(TestCase):
         a = Driver()
         a.addCourse(351, "CS351")
         a.deleteCourse(351)
-        with self.assertRaises(UserModel.DoesNotExist, msg=""):
-            UserModel.objects.get(user_id=351)
+        with self.assertRaises(MyUserModel.DoesNotExist, msg=""):
+            MyUserModel.objects.get(user_id=351)
 
     def test_delete_course2(self):
         a = Driver()
         a.addCourse(361, "CS361")
         a.deleteCourse(361)
-        with self.assertRaises(UserModel.DoesNotExist, msg=""):
-            UserModel.objects.get(user_id=361)
+        with self.assertRaises(MyUserModel.DoesNotExist, msg=""):
+            MyUserModel.objects.get(user_id=361)
 
     def test_delete_course3(self):
         a = Driver()
         a.addCourse(337, "CS337")
         a.deleteCourse(337)
-        with self.assertRaises(UserModel.DoesNotExist, msg=""):
-            UserModel.objects.get(user_id=337)
+        with self.assertRaises(MyUserModel.DoesNotExist, msg=""):
+            MyUserModel.objects.get(user_id=337)
 
     def test_too_many_args(self):
         with self.assertRaises(OverflowError, msg="too many arguments"):
