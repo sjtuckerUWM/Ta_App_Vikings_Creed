@@ -15,11 +15,11 @@ class UserModel(models.Model):
 
 class CourseModel(models.Model):
     course_id = models.AutoField(primary_key=True)
-    dept_code = models.CharField(max_length=20)
+    dept_code = models.CharField(max_length=20, blank=True)
     name = models.CharField(max_length=20)
 
-    assigned_instructor = models.ForeignKey(UserModel, on_delete=models.PROTECT , related_name="instructor")
-    assigned_tas = models.ManyToManyField(UserModel)
+    assigned_instructor = models.ForeignKey(UserModel, on_delete=models.PROTECT, related_name="instructor", null=True)
+    assigned_tas = models.ManyToManyField(UserModel, null=True)
 
 
 class SectionModel(models.Model):
