@@ -1,7 +1,8 @@
+from classes.course import Course
 from classes.supervisor import Supervisor
 from classes.instructor import Instructor
 from classes.TA import TA
-from proj_app.models import MyUserModel
+from proj_app.models import MyUserModel, CourseModel
 import re
 
 class Driver(object):
@@ -21,10 +22,9 @@ class Driver(object):
     def fillCourses(self):
         things = list(CourseModel.objects.all())
 
-<<<<<<< HEAD:classes/Driver.py
         # things = MyMyUserModal.objects.iterator(100
         things = list(MyUserModel.objects.all())
-=======
+
         for entry in things:
             print(entry.name)
             self.courseList[entry.course_id] = Course(entry.course_id, entry.name)
@@ -34,9 +34,8 @@ class Driver(object):
                 self.courseList[entry.course_id].assignTA(list(entry.assigned_tas.all()))
 
     def fillAccounts(self):
-        # things = UserModel.objects.iterator(100
-        things = list(UserModel.objects.all())
->>>>>>> origin/master:project_app/Driver.py
+        # things = MyUserModel.objects.iterator(100
+        things = list(MyUserModel.objects.all())
 
         for entry in things:
             print(entry.email)
@@ -170,9 +169,4 @@ class Driver(object):
         for i in ta_ids:
             course.assigned_tas.add(i)
         course.save()
-
-
-
-
-
 
