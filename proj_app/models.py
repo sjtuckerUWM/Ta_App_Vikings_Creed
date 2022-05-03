@@ -13,12 +13,21 @@ class MyUserModel(models.Model):
 
 
 class CourseModel(models.Model):
+<<<<<<< HEAD:proj_app/models.py
 
     dept_code = models.CharField(max_length=20)
     name = models.CharField(max_length=20)
 
     #assigned_instructor = models.ForeignKey(UserModel, on_delete=models.PROTECT , related_name="instructor")
     #assigned_tas = models.ManyToManyField(UserModel)
+=======
+    course_id = models.AutoField(primary_key=True)
+    dept_code = models.CharField(max_length=20, blank=True)
+    name = models.CharField(max_length=20)
+
+    assigned_instructor = models.ForeignKey(UserModel, on_delete=models.PROTECT, related_name="instructor", null=True)
+    assigned_tas = models.ManyToManyField(UserModel, null=True)
+>>>>>>> origin/master:project_app/models.py
 
 
 class SectionModel(models.Model):

@@ -11,16 +11,32 @@ class Driver(object):
         self.courseList = {}
         # self.addAccount(1, "email@a.com", "pass", "Test User", "USA", "123-456-7890", 0)
         self.fillAccounts()
+        self.fillCourses()
         # to see if logIn works VVV
         # self.addAccount(1, "email@a.com", "pass", "Test User", "USA", "123-456-7890", 0)
 
     def getCurrentAccount(self):
         return self.currentAccount
 
-    def fillAccounts(self):
+    def fillCourses(self):
+        things = list(CourseModel.objects.all())
 
+<<<<<<< HEAD:classes/Driver.py
         # things = MyMyUserModal.objects.iterator(100
         things = list(MyUserModel.objects.all())
+=======
+        for entry in things:
+            print(entry.name)
+            self.courseList[entry.course_id] = Course(entry.course_id, entry.name)
+            if(entry.assigned_instructor is not None):
+                self.courseList[entry.course_id].assignInstructor(entry.assigned_instructor)
+            if (entry.assigned_tas is not None):
+                self.courseList[entry.course_id].assignTA(list(entry.assigned_tas.all()))
+
+    def fillAccounts(self):
+        # things = UserModel.objects.iterator(100
+        things = list(UserModel.objects.all())
+>>>>>>> origin/master:project_app/Driver.py
 
         for entry in things:
             print(entry.email)
@@ -125,10 +141,38 @@ class Driver(object):
     def addCourse(self, courseid, coursename):
         # Precondition: Course parameters are valid
         # Postcondition: Course has been added to the courses list
-        pass
+        a = ["", ""]
+        if (re.findall("[1-9][0-9]*", courseid) != [courseid]) or int(courseid) > 9999:
+            a[0] = "Invalid, integer between 0 and 9999"
+        else:
+            try:
+                m = CourseModel.objects.get(course_id=courseid)
+                a[0] = "Invalid, ID already in use by " + m.name
+            except:
+                pass
+        if (len(str(coursename)) < 5) or (len(str(coursename)) > 19):
+            a[1] = "Invalid, 5 or more characters"
+        if a != ["", ""]:
+            return a
 
-    def deleteCourse(self,  courseIndex):
-        pass
+        self.courseList[courseid] = (Course(courseid, coursename))
+
+        added = CourseModel(course_id=courseid, name=coursename)
+        added.save()
+        return a
+
+    def deleteCourse(self,  ID):
+        CourseModel.objects.get(course_id=ID).delete()
+
+    def assignToCourse(self, course_id, instructor_id, ta_ids):
+        course = CourseModel.objects.get(course_id=course_id)
+        course.assigned_instructor = instructor_id
+        for i in ta_ids:
+            course.assigned_tas.add(i)
+        course.save()
+
+
+
 
 
 
