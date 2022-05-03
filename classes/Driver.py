@@ -1,9 +1,7 @@
-from project_app.supervisor import Supervisor
-from project_app.instructor import Instructor
-from project_app.TA import TA
-from project_app.course import Course
-from project_app.section import Section
-from project_app.models import UserModel, CourseModel, SectionModel
+from classes.supervisor import Supervisor
+from classes.instructor import Instructor
+from classes.TA import TA
+from proj_app.models import MyUserModel
 import re
 
 class Driver(object):
@@ -13,27 +11,16 @@ class Driver(object):
         self.courseList = {}
         # self.addAccount(1, "email@a.com", "pass", "Test User", "USA", "123-456-7890", 0)
         self.fillAccounts()
-        self.fillCourses()
         # to see if logIn works VVV
         # self.addAccount(1, "email@a.com", "pass", "Test User", "USA", "123-456-7890", 0)
 
     def getCurrentAccount(self):
         return self.currentAccount
 
-    def fillCourses(self):
-        things = list(CourseModel.objects.all())
-
-        for entry in things:
-            print(entry.name)
-            self.courseList[entry.course_id] = Course(entry.course_id, entry.name)
-            if(entry.assigned_instructor is not None):
-                self.courseList[entry.course_id].assignInstructor(entry.assigned_instructor)
-            if (entry.assigned_tas is not None):
-                self.courseList[entry.course_id].assignTA(list(entry.assigned_tas.all()))
-
     def fillAccounts(self):
-        # things = UserModel.objects.iterator(100
-        things = list(UserModel.objects.all())
+
+        # things = MyMyUserModal.objects.iterator(100
+        things = list(MyUserModel.objects.all())
 
         for entry in things:
             print(entry.email)
@@ -48,8 +35,8 @@ class Driver(object):
     def logIn(self, email, password):
         # if self.currentAccount != None: return RuntimeError
         try:
-            m = UserModel.objects.get(email=email)
-            if UserModel.objects.get(email=email).password == password:
+            m = MyUserModel.objects.get(email=email)
+            if MyUserModel.objects.get(email=email).password == password:
                 self.currentAccount = self.accountList[email]
                 return 2
             return 1
@@ -62,14 +49,14 @@ class Driver(object):
         if (re.findall("[1-9][0-9]*", id) != [id]) or int(id)>9999 : a[0] = "Invalid, integer between 0 and 9999"
         else:
             try:
-                m = UserModel.objects.get(user_id=id)
+                m = MyUserModel.objects.get(user_id=id)
                 a[0] = "Invalid, ID already in use by " + m.email
             except:
                 pass
         if (re.findall("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", email) != [email]) or (len(str(email))>99): a[1] =  "Invalid"
         else:
             try:
-                m = UserModel.objects.get(email=email)
+                m = MyUserModel.objects.get(email=email)
                 a[1] = "Invalid, Email already in use by " + m.name
             except:
                 pass
@@ -88,12 +75,12 @@ class Driver(object):
         elif (role == 2):
             self.accountList[email] = (TA(id, email, password, name, address, phoneNum))
 
-        added = UserModel(id, name, email, password,  address, phoneNum, role)
+        added = MyUserModel(id, name, email, password,  address, phoneNum, role)
         added.save()
         return a
 
     def deleteAccount(self, ID):
-        UserModel.objects.get(user_id=ID).delete()
+        MyUserModel.objects.get(user_id=ID).delete()
 
 
     def editAccount(self, oldID, id, email, password, name, address, phoneNum, role):
@@ -102,15 +89,15 @@ class Driver(object):
             a[0] = "Invalid, integer between 0 and 9999"
         elif(int(id)!=oldID):
             try:
-                m = UserModel.objects.get(user_id=id)
+                m = MyUserModel.objects.get(user_id=id)
                 a[0] = "Invalid, ID already in use by " + m.email
             except:
                 pass
         if (re.findall("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", email) != [email]) or (len(str(email)) > 99):
             a[1] = "Invalid"
-        elif(UserModel.objects.get(user_id=oldID).email!=email):
+        elif(MyUserModel.objects.get(user_id=oldID).email!=email):
             try:
-                m = UserModel.objects.get(email=email)
+                m = MyUserModel.objects.get(email=email)
                 a[1] = "Invalid, Email already in use by " + m.name
             except:
                 pass
@@ -131,45 +118,17 @@ class Driver(object):
         elif (role == 2):
             self.accountList[email] = (TA(id, email, password, name, address, phoneNum))
 
-        added = UserModel(id, name, email, password, address, phoneNum, role)
+        added = MyUserModel(id, name, email, password, address, phoneNum, role)
         added.save()
         return a
 
     def addCourse(self, courseid, coursename):
         # Precondition: Course parameters are valid
         # Postcondition: Course has been added to the courses list
-        a = ["", ""]
-        if (re.findall("[1-9][0-9]*", courseid) != [courseid]) or int(courseid) > 9999:
-            a[0] = "Invalid, integer between 0 and 9999"
-        else:
-            try:
-                m = CourseModel.objects.get(course_id=courseid)
-                a[0] = "Invalid, ID already in use by " + m.name
-            except:
-                pass
-        if (len(str(coursename)) < 5) or (len(str(coursename)) > 19):
-            a[1] = "Invalid, 5 or more characters"
-        if a != ["", ""]:
-            return a
+        pass
 
-        self.courseList[courseid] = (Course(courseid, coursename))
-
-        added = CourseModel(course_id=courseid, name=coursename)
-        added.save()
-        return a
-
-    def deleteCourse(self,  ID):
-        CourseModel.objects.get(course_id=ID).delete()
-
-    def assignToCourse(self, course_id, instructor_id, ta_ids):
-        course = CourseModel.objects.get(course_id=course_id)
-        course.assigned_instructor = instructor_id
-        for i in ta_ids:
-            course.assigned_tas.add(i)
-        course.save()
-
-
-
+    def deleteCourse(self,  courseIndex):
+        pass
 
 
 

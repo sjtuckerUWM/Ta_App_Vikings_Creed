@@ -1,6 +1,3 @@
-from project_app.TA import TA
-
-
 class Section:
     # class variables
     # TA = TA()

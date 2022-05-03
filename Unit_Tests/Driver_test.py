@@ -1,6 +1,6 @@
 import unittest
 from django.test import TestCase
-from project_app.Driver import Driver
+from classes.Driver import Driver
 
 
 # Params: id, email, password, name, address, phoneNum, role

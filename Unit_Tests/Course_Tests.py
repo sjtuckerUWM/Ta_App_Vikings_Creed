@@ -1,9 +1,9 @@
 
 import unittest
 
-from project_app.TA import TA
-from project_app.course import Course
-from project_app.section import Section
+from classes.TA import TA
+from classes.course import Course
+from classes.section import Section
 
 
 class CourseTestCase(unittest.TestCase):

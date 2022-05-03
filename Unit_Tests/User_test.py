@@ -1,4 +1,4 @@
-from project_app.user import User
+from classes.user import User
 import unittest
 
 #test for _init_() method

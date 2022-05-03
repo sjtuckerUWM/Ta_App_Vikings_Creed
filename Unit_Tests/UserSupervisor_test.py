@@ -1,4 +1,4 @@
-from project_app.supervisor import Supervisor
+from classes.supervisor import Supervisor
 
 import unittest
 

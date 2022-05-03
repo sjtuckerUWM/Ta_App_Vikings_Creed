@@ -1,11 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
 
-from project_app.instructor import Instructor
-from project_app.models import UserModel, CourseModel
-from project_app.Driver import Driver
-from project_app.supervisor import Supervisor
-from project_app.TA import TA
+from proj_app.models import MyUserModel, CourseModel
+from classes.Driver import Driver
 
 driver = Driver()
 
@@ -42,7 +39,7 @@ class Home(View):
 
 class AccountManagement(View):
     def get(self, request):
-        users = list(UserModel.objects.all())
+        users = list(MyUserModel.objects.all())
         return render(request, "mainTemplates/accountManagement.html", {"users": users})
 
 
@@ -94,10 +91,10 @@ class EditAccount(View):
     def get(self, request, id):
         print(str(id))
         driver = Driver(request.session["currentUser"])
-        account = driver.accountList[UserModel.objects.get(user_id=id).email]
+        account = driver.accountList[MyUserModel.objects.get(user_id=id).email]
         verify = ["", "", "", "", "", "", ""]
         roleStr = ""
-        role = UserModel.objects.get(user_id=id).role
+        role = MyUserModel.objects.get(user_id=id).role
         request.session['editRole'] = role
 
         if(role == 0):
