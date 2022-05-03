@@ -12,7 +12,7 @@ class Driver(object):
         self.courseList = {}
         # self.addAccount(1, "email@a.com", "pass", "Test User", "USA", "123-456-7890", 0)
         self.fillAccounts()
-        self.fillCourses()
+        # self.fillCourses()
         # to see if logIn works VVV
         # self.addAccount(1, "email@a.com", "pass", "Test User", "USA", "123-456-7890", 0)
 

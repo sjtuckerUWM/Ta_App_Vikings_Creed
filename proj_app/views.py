@@ -4,7 +4,6 @@ from django.views import View
 from proj_app.models import MyUserModel, CourseModel
 from classes.Driver import Driver
 
-driver = Driver()
 
 
 # Create your views here.
@@ -13,7 +12,7 @@ class Login(View):
         return render(request, "mainTemplates/loginPage.html")
 
     def post(self, request):
-
+        driver = Driver()
         email = request.POST['email']
         password = request.POST['password']
         print(email)
