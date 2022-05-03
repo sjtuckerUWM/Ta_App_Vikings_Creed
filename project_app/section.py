@@ -3,21 +3,21 @@ from project_app.TA import TA
 
 class Section:
     # class variables
-    # TA = TA()
-    # courseNum = 0
-    # hasLab = False
-    # sectNum = 0
-    # meetingInfo = ""
+    TA = None  # TA("1", "TA@test.com", "pass1234", "Test TA", "USA", "123-456-7890")
+    courseNum = 0
+    hasLab = False
+    sectNum = 0
+    meetingInfo = ""
 
     def __init__(self):
         pass
 
-    def __init__(self, TA, hasLab):
-        self.TA = TA
+    def __init__(self, ta, hasLab):
+        self.TA = ta
         self.hasLab = hasLab
 
-    def __init__(self, TA, SectionNumber, MeetingTimePlace):
-        self.TA = TA
+    def __init__(self, ta, SectionNumber, MeetingTimePlace):
+        self.TA = ta
         self.sectNum = SectionNumber
         self.meetingInfo = MeetingTimePlace
 
@@ -38,8 +38,8 @@ class Section:
         return self.meetingInfo
 
     # Setters
-    def getTA(self, TA):
-        self.TA = TA
+    def getTA(self, ta):
+        self.TA = ta
 
     def getCourseNum(self, courseNum):
         self.courseNum = courseNum

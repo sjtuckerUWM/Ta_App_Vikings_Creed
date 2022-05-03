@@ -1,3 +1,6 @@
+from project_app.section import Section
+
+
 class Course:
     # Class Variables
     courseID = 0
@@ -21,14 +24,25 @@ class Course:
         self.setInstructor(instructorId)
 
     def AddSection(self, CourseNum, TA, SectionNumber, MeetingTimePlace):
-        # TODO
-        pass
+        # id, email, password, name, address, phoneNum
+        if self.courseID == CourseNum:
+            s = Section(TA, SectionNumber, MeetingTimePlace)
+            self.sectionList.append(s)
+            return True
+        
+        return False
 
     def DeleteSection(self, SectionID):
-        pass
+        for i in self.sectionList:
+            if i.sectNum == SectionID:
+                self.sectionList.remove(i)
+                return True
 
-    def containsTA(self, TA, *TA_list):
-        for i in TA_list:
+        # if the id wasn't in the list
+        return False
+
+    def containsTA(self, TA):
+        for i in self.TA_list:
             if i == TA:
                 return True
         return False
