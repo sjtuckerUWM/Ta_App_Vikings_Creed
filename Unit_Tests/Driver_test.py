@@ -1,6 +1,6 @@
-import unittest
 from django.test import TestCase
-from classes.Driver import Driver
+from project_app.Driver import Driver
+from project_app.models import UserModel
 
 
 # Params: id, email, password, name, address, phoneNum, role
@@ -37,8 +37,76 @@ class TestAddAccount(TestCase):
 
 
 class TestEditAccount(TestCase):
-    def test_edit_acc(self):
+    def test_edit_Instructor(self):
         a = Driver()
+        a.addAccount("1", "Instructor@test.com", "pass1234", "test", "USA", "123-456-7890", 1)
+        self.assertEqual(a.editAccount("1", "2", "Instructor@test.com", "pass1234", "test", "USA", "123-456-7890", 1),
+                         ["", "", "", "", "", "", ""])
+
+    def test_edit_TA(self):
+        a = Driver()
+        a.addAccount("3", "TA@test.com", "pass1234", "test", "USA", "123-456-7890", 2)
+        self.assertEqual(a.editAccount("3", "4", "TA@test.com", "pass1234", "test", "USA", "123-456-7890", 2),
+                         ["", "", "", "", "", "", ""])
+
+    def test_edit_Supervisor(self):
+        a = Driver()
+        a.addAccount("5", "Supervisor@test.com", "pass1234", "test", "USA", "123-456-7890", 0)
+        self.assertEqual(a.editAccount("5", "6", "Supervisor@test.com", "pass1234", "test", "USA", "123-456-7890", 0),
+                         ["", "", "", "", "", "", ""])
+
+    def test_add_wrong_type(self):
+        a = Driver()
+        with self.assertRaises(TypeError, msg="invalid argument"):
+            a.editAccount(1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+    def test_add_too_few_args(self):
+        a = Driver()
+        with self.assertRaises(TypeError, msg="too few arguments"):
+            a.editAccount("test")
+
+    def test_add_too_many_args(self):
+        a = Driver()
+        with self.assertRaises(TypeError, msg="too many arguments"):
+            a.editAccount("", "", "", "", "", "", "", "", "", 0)
+
+
+class TestDeleteAccount(TestCase):
+    def test_delete_Instructor(self):
+        a = Driver()
+        a.addAccount("24", "Instructor@test.com", "pass1234", "test", "USA", "123-456-7890", 1)
+        a.deleteAccount(24)
+        with self.assertRaises(UserModel.DoesNotExist, msg=""):
+            UserModel.objects.get(user_id=24)
+
+    def test_delete_TA(self):
+        a = Driver()
+        a.addAccount("3", "TA@test.com", "pass1234", "test", "USA", "123-456-7890", 2)
+        a.deleteAccount(3)
+        with self.assertRaises(UserModel.DoesNotExist, msg=""):
+            UserModel.objects.get(user_id=3)
+
+    def test_delete_Supervisor(self):
+        a = Driver()
+        a.addAccount("5", "Supervisor@test.com", "pass1234", "test", "USA", "123-456-7890", 0)
+        a.deleteAccount(5)
+        with self.assertRaises(UserModel.DoesNotExist, msg=""):
+            UserModel.objects.get(user_id=3)
+
+    def test_delete_wrong_type(self):
+        a = Driver()
+        with self.assertRaises(TypeError, msg="invalid argument"):
+            a.editAccount(1, 1)
+
+    def test_delete_too_few_args(self):
+        a = Driver()
+        with self.assertRaises(TypeError, msg="too few arguments"):
+            a.editAccount()
+
+    def test_delete_too_many_args(self):
+        a = Driver()
+        with self.assertRaises(TypeError, msg="too many arguments"):
+            a.editAccount("1", "1")
 
 
 # 6 strings added when done, int: courseId, string: courseName
@@ -72,52 +140,39 @@ class TestAddCourse(TestCase):
             c.addCourse_(351, 361)
 
 
-class TestDeleteCourse(unittest.TestCase):
-    def setup(self):
+class TestDeleteCourse(TestCase):
+    def test_delete_course1(self):
+        a = Driver()
+        a.addCourse(351, "CS351")
+        a.deleteCourse(351)
+        with self.assertRaises(UserModel.DoesNotExist, msg=""):
+            UserModel.objects.get(user_id=351)
+
+    def test_delete_course2(self):
+        a = Driver()
+        a.addCourse(361, "CS361")
+        a.deleteCourse(361)
+        with self.assertRaises(UserModel.DoesNotExist, msg=""):
+            UserModel.objects.get(user_id=361)
+
+    def test_delete_course3(self):
+        a = Driver()
+        a.addCourse(337, "CS337")
+        a.deleteCourse(337)
+        with self.assertRaises(UserModel.DoesNotExist, msg=""):
+            UserModel.objects.get(user_id=337)
+
+    def test_too_many_args(self):
         with self.assertRaises(OverflowError, msg="too many arguments"):
             a = Driver()
             a.deleteCourse_(123, "CS361", 801)
+
+    def test_no_args(self):
         with self.assertRaises(TypeError, msg=" no argument"):
             b = Driver()
             b.deleteCourse_()
+
+    def test_invalid_args(self):
         with self.assertRaises(TypeError, msg=" invalid arguments"):
             c = Driver()
             c.deleteCourse_("id")
-
-    def test_default(self):
-        a = Driver()
-        self.assertTrue(a.deleteCourse_(123))
-
-
-class TestaddSection(unittest.TestCase):
-    def setup(self):
-        with self.assertRaises(OverflowError, msg="too many arguments"):
-            a = Driver()
-            a.addSection_(123, "CS361", 801)
-        with self.assertRaises(TypeError, msg=" no argument"):
-            b = Driver()
-            b.addSection_()
-        with self.assertRaises(TypeError, msg=" invalid arguments"):
-            c = Driver()
-            c.addSection_("id",123)
-
-    def test_default(self):
-        a = Driver()
-        self.assertTrue(a.addSection_(361,"CS361"))
-
-
-class TestDeleteSection(unittest.TestCase):
-    def setup(self):
-        with self.assertRaises(OverflowError, msg="too many arguments"):
-            a = Driver()
-            a.deletesection_(123, "CS361", 801)
-        with self.assertRaises(TypeError, msg=" no argument"):
-            b = Driver()
-            b.deletesection_()
-        with self.assertRaises(TypeError, msg=" invalid arguments"):
-            c = Driver()
-            c.deletesection_("id",123)
-
-    def test_default(self):
-        a = Driver()
-        self.assertTrue(a.deletesection_(361,"CS361"))
