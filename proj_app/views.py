@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views import View
 
-from proj_app.models import MyUserModel, CourseModel
+from proj_app.models import MyUserModel, CourseModel, Department
 from classes.Driver import Driver
 
-driver = Driver()
 
 
 # Create your views here.
@@ -13,7 +12,7 @@ class Login(View):
         return render(request, "mainTemplates/loginPage.html")
 
     def post(self, request):
-
+        driver = Driver()
         email = request.POST['email']
         password = request.POST['password']
         print(email)
@@ -159,3 +158,31 @@ class ManageCourse(View):
     def get(self, request):
         courses = list(CourseModel.objects.all())
         return render(request, "mainTemplates/courseManagement.html", {"courses": courses})
+class AddCourse(View):
+    def get(self, request):
+        return render(request, "mainTemplates/addCoursePage.html", {"departments": Department.choices})
+
+    def post(self, request):
+        print(Department('COMP SCI').name)
+        # print(Department['Comp Sci'])
+        driver = Driver(request.session["currentUser"])
+        id = request.POST['id']
+        dep = request.POST['dep']
+        print("dep is " + dep)
+        name = request.POST['name']
+        verify = driver.addCourse(id, dep, name)
+        if verify == ["", "", ""]:
+            return redirect("/courses")
+        values = {
+            'id': request.POST['id'],
+            'name': request.POST['name'],
+            'dep': request.POST['dep'],
+            'v_id': verify[0],
+            'v_dep': verify[1],
+            'v_name': verify[2],
+            "departments": Department.choices
+        }
+        return render(request, "mainTemplates/addCoursePage.html", values)
+class AssignToCourse(View):
+    def get(self, request, id):
+        return render(request, "mainTemplates/assignToCoursePage.html")
