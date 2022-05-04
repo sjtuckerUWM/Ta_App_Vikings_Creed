@@ -1,9 +1,8 @@
-from supervisor import Supervisor
-from instructor import Instructor
-from TA import TA
-from course import Course
-from section import Section
-from proj_app.models import MyUserModel, CourseModel, SectionModel
+from classes.course import Course
+from classes.supervisor import Supervisor
+from classes.instructor import Instructor
+from classes.TA import TA
+from proj_app.models import MyUserModel, CourseModel
 import re
 
 class Driver(object):
