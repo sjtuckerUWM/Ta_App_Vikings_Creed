@@ -16,9 +16,10 @@ class UserModel(models.Model):
 class CourseModel(models.Model):
     course_id = models.AutoField(primary_key=True)
     dept_code = models.CharField(max_length=20)
+    course_num = models.CharField(max_length=20)
     name = models.CharField(max_length=20)
 
-    assigned_instructor = models.ForeignKey(UserModel, on_delete=models.PROTECT , related_name="instructor")
+    assigned_instructor = models.ForeignKey(UserModel, on_delete=models.PROTECT, related_name="instructor")
     assigned_tas = models.ManyToManyField(UserModel)
 
 
