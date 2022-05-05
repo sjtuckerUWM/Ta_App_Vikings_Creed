@@ -1,18 +1,13 @@
+from classes.section import Section
+
+
 class Course:
-    # Class Variables
-    courseID = 0
-    courseName = ""
-    instructorId = 0
-    sectionList = []
-    TA_list = []
 
-    # Constructors
-    def __init__(self):
-        pass
-
-    def __init__(self, courseID, CourseName):
+    def __init__(self, courseID=1, courseDep="COMP SCI", CourseName="Intro to CS"):
         self.courseID = courseID
+        self.courseDep = courseDep
         self.courseName = CourseName
+        self.TA_list = []
 
     def assignTA(self, TA_list):
         self.setTA_list(TA_list)
@@ -21,14 +16,25 @@ class Course:
         self.setInstructor(instructorId)
 
     def AddSection(self, CourseNum, TA, SectionNumber, MeetingTimePlace):
-        # TODO
-        pass
+        # id, email, password, name, address, phoneNum
+        if self.courseID == CourseNum:
+            s = Section(TA, SectionNumber, MeetingTimePlace)
+            self.sectionList.append(s)
+            return True
+
+        return False
 
     def DeleteSection(self, SectionID):
-        pass
+        for i in self.sectionList:
+            if i.sectNum == SectionID:
+                self.sectionList.remove(i)
+                return True
 
-    def containsTA(self, TA, *TA_list):
-        for i in TA_list:
+        # if the id wasn't in the list
+        return False
+
+    def containsTA(self, TA):
+        for i in self.TA_list:
             if i == TA:
                 return True
         return False
@@ -59,10 +65,10 @@ class Course:
     def setInstructor(self, instructorID):
         self.instructorId = instructorID
 
-    def setSectionList(self, *sectionList):
+    def setSectionList(self, sectionList):
         for i in sectionList:
             self.sectionList.append(i)
 
-    def setTA_list(self, *TA_list):
+    def setTA_list(self, TA_list):
         for i in TA_list:
             self.TA_list.append(i)

@@ -11,8 +11,9 @@ class Driver(object):
         self.accountList = {}
         self.courseList = {}
         # self.addAccount(1, "email@a.com", "pass", "Test User", "USA", "123-456-7890", 0)
+        c = CourseModel(course_id=5,dept_code="BIO SCI", name="coursename")
         self.fillAccounts()
-        self.fillCourses()
+        #self.fillCourses()
         # to see if logIn works VVV
         # self.addAccount(1, "email@a.com", "pass", "Test User", "USA", "123-456-7890", 0)
 
@@ -21,9 +22,6 @@ class Driver(object):
 
     def fillCourses(self):
         things = list(CourseModel.objects.all())
-
-        # things = MyMyUserModal.objects.iterator(100
-        things = list(MyUserModel.objects.all())
 
         for entry in things:
             print(entry.name)
@@ -34,7 +32,7 @@ class Driver(object):
                 self.courseList[entry.course_id].assignTA(list(entry.assigned_tas.all()))
 
     def fillAccounts(self):
-        # things = MyUserModel.objects.iterator(100
+        # things = UserModel.objects.iterator(100
         things = list(MyUserModel.objects.all())
 
         for entry in things:
@@ -90,7 +88,7 @@ class Driver(object):
         elif (role == 2):
             self.accountList[email] = (TA(id, email, password, name, address, phoneNum))
 
-        added = MyUserModel(id, name, email, password,  address, phoneNum, role)
+        added = MyUserModel(id, name, email, password, address, phoneNum, role)
         added.save()
         return a
 
@@ -110,7 +108,7 @@ class Driver(object):
                 pass
         if (re.findall("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", email) != [email]) or (len(str(email)) > 99):
             a[1] = "Invalid"
-        elif(MyUserModel.objects.get(user_id=oldID).email!=email):
+        elif(MyUserModel.objects.get(user_id=oldID).email != email):
             try:
                 m = MyUserModel.objects.get(email=email)
                 a[1] = "Invalid, Email already in use by " + m.name
@@ -137,10 +135,10 @@ class Driver(object):
         added.save()
         return a
 
-    def addCourse(self, courseid, coursename):
+    def addCourse(self, courseid, coursedep, coursename):
         # Precondition: Course parameters are valid
         # Postcondition: Course has been added to the courses list
-        a = ["", ""]
+        a = ["", "", ""]
         if (re.findall("[1-9][0-9]*", courseid) != [courseid]) or int(courseid) > 9999:
             a[0] = "Invalid, integer between 0 and 9999"
         else:
@@ -149,14 +147,16 @@ class Driver(object):
                 a[0] = "Invalid, ID already in use by " + m.name
             except:
                 pass
+        if (coursedep == ""):
+            a[1] = "Invalid, Select a department"
         if (len(str(coursename)) < 5) or (len(str(coursename)) > 19):
-            a[1] = "Invalid, 5 or more characters"
-        if a != ["", ""]:
+            a[2] = "Invalid, 5 or more characters"
+        if a != ["", "", ""]:
             return a
 
-        self.courseList[courseid] = (Course(courseid, coursename))
+        self.courseList[courseid] = (Course(courseid, coursedep, coursename))
 
-        added = CourseModel(course_id=courseid, name=coursename)
+        added = CourseModel(course_id=courseid,dept_code=coursedep, name=coursename)
         added.save()
         return a
 
@@ -169,4 +169,9 @@ class Driver(object):
         for i in ta_ids:
             course.assigned_tas.add(i)
         course.save()
+
+
+
+
+
 

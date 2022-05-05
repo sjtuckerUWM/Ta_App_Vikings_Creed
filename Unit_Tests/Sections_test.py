@@ -1,26 +1,65 @@
-import unittest
+from django.test import TestCase
+
 from classes.TA import TA
 from classes.section import Section
 
 
-class MyTestCase(unittest.TestCase):
-    def setUp(self):
-        t1 = TA()
-        t2 = TA()
+class Test__Init__(TestCase):
+    def test__init(self):
+        ta = TA("1", "TA@test.com", "pass1234", "Test TA", "USA", "123-456-7890")
+        s = Section(ta, 801, "Mon-Wed EMS180 10-11am")
+        self.assertEqual(s.TA, ta)
+        self.assertEqual(s.sectNum, 801)
 
-        self.t1.setName("John")
-        self.t2.setName("Sally")
+    def test__init2(self):
+        ta = TA("1", "TA@test.com", "pass1234", "Test TA", "USA", "123-456-7890")
+        s = Section(ta, 901, "Mon-Wed EMS180 10-11am")
+        self.assertEqual(s.TA, ta)
+        self.assertEqual(s.sectNum, 901)
+        self.assertEqual(s.meetingInfo, "Mon-Wed EMS180 10-11am")
 
-        self.sect1 = Section(t1, 801, "Library")
-        self.sect2 = Section(t2, 901, "remote")
+    def test_too_many_args(self):
+        with self.assertRaises(TypeError, msg="too many arguments"):
+            ta = TA("1", "TA@test.com", "pass1234", "Test TA", "USA", "123-456-7890")
+            a = Section(ta, 901, "meeting place", 1)
 
-    def test_creation(self):
-        self.assertEqual(self.sect1.getCourseNum(), 801)
-        self.assertEqual(self.sect1.getMeetingPlace(), "Library")
+    def test_no_args(self):
+        with self.assertRaises(TypeError, msg=" no argument"):
+            b = Section()
 
-        self.assertEqual(self.sect2.getCourseNum(), 901)
-        self.assertEqual(self.sect2.getMeetingPlace(), "remote")
+    def test_invalid_args(self):
+        with self.assertRaises(TypeError, msg=" invalid arguments"):
+            c = Section("id", 123)
 
 
-if __name__ == '__main__':
-    unittest.main()
+class TestSetters(TestCase):
+    def test_setTA(self):
+        ta = TA("1", "TA@test.com", "pass1234", "Test TA", "USA", "123-456-7890")
+        ta2 = TA("2", "TA@test.com", "pass1234", "Test TA", "USA", "123-456-7890")
+        s = Section(ta, 901, "Mon-Wed EMS180 10-11am")
+        s.setTA(ta2)
+        self.assertEqual(s.TA, ta2)
+
+    def test_setCourseNum(self):
+        ta = TA("1", "TA@test.com", "pass1234", "Test TA", "USA", "123-456-7890")
+        s = Section(ta, 901, "Mon-Wed EMS180 10-11am")
+        s.setCourseNum(361)
+        self.assertEqual(s.courseNum, 361)
+
+    def test_setLabStatus(self):
+        ta = TA("1", "TA@test.com", "pass1234", "Test TA", "USA", "123-456-7890")
+        s = Section(ta, 901, "Mon-Wed EMS180 10-11am")
+        s.setLabStatus(True)
+        self.assertEqual(s.hasLab, True)
+
+    def test_setSectionNum(self):
+        ta = TA("1", "TA@test.com", "pass1234", "Test TA", "USA", "123-456-7890")
+        s = Section(ta, 901, "Mon-Wed EMS180 10-11am")
+        s.setSectionNum(801)
+        self.assertEqual(s.sectNum, 801)
+
+    def test_setMeetingPlace(self):
+        ta = TA("1", "TA@test.com", "pass1234", "Test TA", "USA", "123-456-7890")
+        s = Section(ta, 901, "Mon-Wed EMS180 10-11am")
+        s.setMeetingPlace("Milwaukee")
+        self.assertEqual(s.meetingInfo, "Milwaukee")

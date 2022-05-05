@@ -1,10 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Supervisor Homepage</h1>
-
-<a href = "/accounts/">Manage Accounts</a>
-<br>
-<a href = "courseManagement.html">Manage Courses</a>
+    {% load static %}
+    <div class="container mt-2 pt-3">
+        <img class="mx-auto d-block p-5" src="{% static 'TA_APP/uwmLogo.jpg' %}" alt="UWM LOGO" style="width: 300px; height: auto" onclick="href = 'home'">
+        {% if role_id == 0 %}
+        <a href = '/accounts/' type="button" class="btn btn-secondary col-12 mx-auto my-4 py-3" style="font-size: 32px">ACCOUNT MANAGEMENT</a>
+        {% endif %}
+        {% if role_id == 0 or role_id == 1 %}
+        <a href = '/courses/' type="button" class="btn btn-secondary col-12 mx-auto my-4 py-3" style="font-size: 32px">COURSE MANAGEMENT</a>
+        {% else %}
+        <a href = '' type="button" class="btn btn-secondary col-12 mx-auto my-4 py-3" style="font-size: 32px">MY SECTION</a>
+        {% endif %}
+        <a href = '/' type="button" class="btn btn-secondary col-12 mx-auto my-4 py-3" style="font-size: 32px">CONTACTS</a>
+        <div class="col text-center">
+            <a href = '/' type="button" class="btn btn-danger col-3 my-4 py-2" style="font-size: 32px">LOG OUT</a>
+        </div>
+    </div>
 
 {% endblock %}

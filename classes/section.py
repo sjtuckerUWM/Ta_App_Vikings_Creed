@@ -1,10 +1,10 @@
 class Section:
     # class variables
-    # TA = TA()
-    # courseNum = 0
-    # hasLab = False
-    # sectNum = 0
-    # meetingInfo = ""
+    TA = None
+    courseNum = 0
+    hasLab = False
+    sectNum = 0
+    meetingInfo = ""
 
     def __init__(self):
         pass
@@ -35,17 +35,17 @@ class Section:
         return self.meetingInfo
 
     # Setters
-    def getTA(self, TA):
+    def setTA(self, TA):
         self.TA = TA
 
-    def getCourseNum(self, courseNum):
+    def setCourseNum(self, courseNum):
         self.courseNum = courseNum
 
-    def getLabStatus(self, labStatus):
+    def setLabStatus(self, labStatus):
         self.hasLab = labStatus
 
-    def getSectionNum(self, sectionNum):
+    def setSectionNum(self, sectionNum):
         self.sectNum = sectionNum
 
-    def getMeetingPlace(self, meetingPlace):
+    def setMeetingPlace(self, meetingPlace):
         self.meetingInfo = meetingPlace

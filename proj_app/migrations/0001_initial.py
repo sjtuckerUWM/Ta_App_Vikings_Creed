@@ -16,14 +16,14 @@ class Migration(migrations.Migration):
             name='CourseModel',
             fields=[
                 ('course_id', models.AutoField(primary_key=True, serialize=False)),
-                ('dept_code', models.CharField(blank=True, max_length=20)),
+                ('dept_code', models.CharField(choices=[('COMP SCI', 'Comp Sci'), ('BIO SCI', 'Bio Sci'), ('CHEM', 'Chem'), ('MATH', 'Math'), ('PHYSICS', 'Physics'), ('IND ENG', 'Ind Eng'), ('FILM', 'Film')], max_length=20)),
                 ('name', models.CharField(max_length=20)),
             ],
         ),
         migrations.CreateModel(
             name='MyUserModel',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('user_id', models.AutoField(primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=50)),
                 ('email', models.CharField(max_length=100)),
                 ('password', models.CharField(max_length=20)),
@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='SectionModel',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('section_id', models.AutoField(primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=50)),
                 ('grader', models.BooleanField(default=False)),
                 ('assigned_ta', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='proj_app.myusermodel')),
@@ -50,6 +50,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='coursemodel',
             name='assigned_tas',
-            field=models.ManyToManyField(null=True, to='proj_app.myusermodel'),
+            field=models.ManyToManyField(to='proj_app.myusermodel'),
         ),
     ]

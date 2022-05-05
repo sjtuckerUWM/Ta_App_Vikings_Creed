@@ -3,31 +3,21 @@
 {% block content %}
     <h1>Manage Courses</h1>
 
-    <a href = "">Add Course</a>
+    <a href = "/addCourse/">Add Course</a>
 
-    <table style="width:100%">
+    <table>
       <tr>
-        <th>Course name</th>
-        <th>Professor</th>
+        <th>Courses</th>
+        <th></th>
+        <th></th>
       </tr>
-      <tr>
-        <td>COMPSCI 337</td>
-        <td>Professor 1</td>
-         <td><a href = "AssignsPage.html">Assign</a></td>
-        <td><a href = "sectionManagement.html">Sections</a></td>
-      </tr>
-      <tr>
-        <td>COMPSCI 361</td>
-        <td>Professor 2</td>
-        <td><a href = "AssignsPage.html">Assign</a></td>
-        <td><a href = "sectionManagement.html">Sections</a></td>
-      </tr>
-      <tr>
-        <td>COMPSCI 395</td>
-        <td>Professor 3</td>
-        <td><a href = "AssignsPage.html">Assign</a></td>
-        <td><a href = "sectionManagement.html">Sections</a></td>
-      </tr>
+        {% for i in courses %}
+            <tr>
+                <td>{{i.name}}</td>
+                <td><a href = "/assignToCourse/{{ i.course_id }}">Assign</a></td>
+                <td><a href = "/sections/{{ i.course_id }}">Sections</a></td>
+            </tr>
+        {% endfor %}
     </table>
 
 {% endblock %}
