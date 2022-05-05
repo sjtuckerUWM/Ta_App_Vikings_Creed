@@ -91,7 +91,7 @@ class TestDeleteAccount(TestCase):
         a.addAccount("5", "Supervisor@test.com", "pass1234", "test", "USA", "123-456-7890", 0)
         a.deleteAccount(5)
         with self.assertRaises(MyUserModel.DoesNotExist, msg=""):
-            MyUserModel.objects.get(user_id=3)
+            MyUserModel.objects.get(user_id=5)
 
     def test_delete_wrong_type(self):
         a = Driver()
