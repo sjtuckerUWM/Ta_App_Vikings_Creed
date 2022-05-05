@@ -26,6 +26,7 @@ class TestInit2(unittest.TestCase):
             c= User(1,"Vikings@gmail.com",45,"Sam","13000 W Bluemound RD", "4245948394")
             b = User(1, "Vikings@gmail.com", "selo34", 65, "13000 W Bluemound RD", "4245948394")
             g = User(1, "Vikings@gmail.com", 45, "Sam", "13000 W Bluemound RD", 4245948394)
+            m = User(1, "", 45, "Sam", "13000 W Bluemound RD", 4245948394)
 
 
 #test for getters
