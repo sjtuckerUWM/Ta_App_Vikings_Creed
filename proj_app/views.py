@@ -55,6 +55,11 @@ class AddAccount(View):
         address = request.POST['address']
         phoneNum = request.POST['phoneNum']
         role = request.POST['role']
+        message = 'Blank parameter or paramaters'
+
+        if id == '' or email == '' or password == '' or name == '' or address == '' or phoneNum == '' or role == '':
+            return render(request, "mainTemplates/addAccountPage.html", {'message': message})
+
         verify = driver.addAccount(id, email, password, name, address, phoneNum, role)
         if verify == ["","","","","","",""]:
             return redirect("/accounts")
