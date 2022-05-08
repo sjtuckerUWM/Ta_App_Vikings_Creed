@@ -19,16 +19,16 @@
             </tr>
             <tr>
                 <select name="TA">
-                    <option value="TA1">TA1</option>
-                    <option value="TA2">TA2</option>
-                    <option value="TA3">TA3</option>
+                <option selected value="{{ TA }}">{{ TA }}</option>
+                    {% for i in TAs %}
+                    <option value="{{ i.0 }}">{{ i.0 }}</option>
+                    {% endfor %}
                 </select>
                 <br/>
             </tr>
         </table>
+        <input type="submit" value="Submit" style="margin-left:80px"/>
     </form>
-
-    <input type="submit" value="Submit" style="margin-left:80px"/>
 
     <table style="width:20%">
       <tr>
@@ -37,19 +37,20 @@
         <th>TA</th>
       </tr>
       <tr>
-        <td>801</td>
-        <td> </td>
-        <td>TA 1</td>
+          {% for i in section %}
+              <tr>{{ i.name }}</tr>
+
+          {% endfor %}
       </tr>
       <tr>
-        <td>804</td>
+        <td>sample section: 804</td>
         <td></td></td>
-        <td>TA 2</td>
+        <td>sample TA: TA 2</td>
       </tr>
       <tr>
-        <td>901</td>
+        <td>sample section: 901</td>
         <td></td>
-        <td>TA 3</td>
+        <td>sample TA: TA 3</td>
       </tr>
     </table>
 {% endblock %}
