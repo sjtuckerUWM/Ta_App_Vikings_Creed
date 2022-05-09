@@ -1,7 +1,7 @@
 from django.db import models
 
 
-# Create your models here.
+# Model for Department name
 class Department(models.TextChoices):
     COMP_SCI = 'COMP SCI'
     BIO_SCI = 'BIO SCI'
@@ -11,7 +11,7 @@ class Department(models.TextChoices):
     IND_ENG = 'IND ENG'
     FILM = 'FILM'
 
-
+# Model for users
 class MyUserModel(models.Model):
     user_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
@@ -21,7 +21,7 @@ class MyUserModel(models.Model):
     phone_number = models.CharField(max_length=12)
     role = models.IntegerField()
 
-
+# Model for course
 class CourseModel(models.Model):
     course_id = models.AutoField(primary_key=True)
     dept_code = models.CharField(max_length=20, choices=Department.choices)
@@ -30,7 +30,7 @@ class CourseModel(models.Model):
     assigned_instructor = models.ForeignKey(MyUserModel, on_delete=models.PROTECT, related_name="instructor", null=True)
     assigned_tas = models.ManyToManyField(MyUserModel)
 
-
+# Model for Section
 class SectionModel(models.Model):
     section_id = models.AutoField(primary_key=True)
 

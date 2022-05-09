@@ -12,7 +12,7 @@
 
 class User(object):
 
-
+    # constructor
     def __init__(self, userId=1, email="email@a.com", password="pass", name="John Doe", address="USA", phoneNum="123-456-7890"):
         self.userId = userId
         self.email = email
@@ -21,6 +21,7 @@ class User(object):
         self.address = address
         self.phoneNum = phoneNum
 
+    # getters and setters
     def getID(self):
         return self.userId
 
