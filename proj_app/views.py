@@ -191,4 +191,44 @@ class AddCourse(View):
         return render(request, "mainTemplates/addCoursePage.html", values)
 class AssignToCourse(View):
     def get(self, request, id):
-        return render(request, "mainTemplates/assignToCoursePage.html")
+        curCourse = CourseModel.objects.get(course_id=id)
+        values = {
+            'course': curCourse,
+            'instructorList': list(MyUserModel.objects.filter(role=1).all()),
+            'taList': list(MyUserModel.objects.filter(role=2).all()),
+        }
+        print(curCourse.assigned_instructor)
+        if (curCourse.assigned_instructor is not None):
+            values['instructor'] = curCourse.assigned_instructor
+        if (curCourse.assigned_tas is not None ):
+            values['tas'] = list(curCourse.assigned_tas.all())
+        return render(request, "mainTemplates/assignToCoursePage.html", values)
+    def post(self, request, id):
+
+        driver = Driver(request.session["currentUser"])
+        curCourse = CourseModel.objects.get(course_id=id)
+        print(request.POST.getlist('taIDs'))
+        values = {
+            'course': curCourse,
+            'instructorList': list(MyUserModel.objects.filter(role=1).all()),
+            'taList': list(MyUserModel.objects.filter(role=2).all()),
+        }
+        print(request.POST['instructor'])
+        if(request.POST['instructor']!=''):
+            instruct = MyUserModel.objects.get(user_id=request.POST['instructor'])
+            values['instructor'] = instruct
+            curCourse.assigned_instructor = instruct
+
+        curCourse.assigned_tas.clear()
+
+        if (request.POST.getlist('taIDs') != []):
+            taIDs = request.POST.getlist('taIDs')
+            tas = []
+            for i in taIDs:
+                cur = MyUserModel.objects.get(user_id=int(i))
+                tas.append(cur)
+                curCourse.assigned_tas.add(cur)
+            values['tas'] = tas
+        curCourse.save()
+
+        return render(request, "mainTemplates/assignToCoursePage.html", values)
