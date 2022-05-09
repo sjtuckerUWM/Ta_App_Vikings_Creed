@@ -91,7 +91,7 @@ class TestDeleteAccount(TestCase):
         a.addAccount("5", "Supervisor@test.com", "pass1234", "test", "USA", "123-456-7890", 0)
         a.deleteAccount(5)
         with self.assertRaises(MyUserModel.DoesNotExist, msg=""):
-            MyUserModel.objects.get(user_id=3)
+            MyUserModel.objects.get(user_id=5)
 
     def test_delete_wrong_type(self):
         a = Driver()
@@ -109,70 +109,70 @@ class TestDeleteAccount(TestCase):
             a.editAccount("1", "1")
 
 
-# 6 strings added when done, int: courseId, string: courseName
+# courseid, coursedep, coursename
 class TestAddCourse(TestCase):
     def test_Add_Course(self):
         a = Driver()
-        self.assertEqual(a.addCourse(361, "CS361"), ["", "", "", "", "", ""])
+        self.assertEqual(a.addCourse("361", "Comp Sci", "CS361"), ["", "", ""])
 
     def test_Add_Course2(self):
         a = Driver()
-        self.assertEqual(a.addCourse(351, "CS351"), ["", "", "", "", "", ""])
+        self.assertEqual(a.addCourse("351", "Comp Sci", "CS351"), ["", "", ""])
 
     def test_Add_Course3(self):
         a = Driver()
-        self.assertEqual(a.addCourse(337, "CS337"), ["", "", "", "", "", ""])
+        self.assertEqual(a.addCourse("337", "Comp Sci", "CS337"), ["", "", ""])
 
     def test_too_many_args_course(self):
-        with self.assertRaises(OverflowError, msg="too many arguments"):
+        with self.assertRaises(TypeError, msg="too many arguments"):
             a = Driver()
-            a.addCourse_(123, "CS361", 801)
+            a.addCourse("123", "CS361", "801", "1234")
 
     def test_invalid_course2(self):
         with self.assertRaises(TypeError, msg=" no argument"):
             b = Driver()
-            b.addCourse_()
+            b.addCourse()
 
     def test_invalid_course3(self):
         with self.assertRaises(TypeError, msg=" invalid arguments"):
             c = Driver()
-            c.addCourse_("id", "CS361")
-            c.addCourse_(351, 361)
+            c.addCourse("id", "CS361")
+            c.addCourse(351, 361)
 
 
 class TestDeleteCourse(TestCase):
     def test_delete_course1(self):
         a = Driver()
-        a.addCourse(351, "CS351")
+        a.addCourse("351", "Comp Sci", "CS351")
         a.deleteCourse(351)
         with self.assertRaises(MyUserModel.DoesNotExist, msg=""):
             MyUserModel.objects.get(user_id=351)
 
     def test_delete_course2(self):
         a = Driver()
-        a.addCourse(361, "CS361")
+        a.addCourse("361", "Comp Sci", "CS361")
         a.deleteCourse(361)
         with self.assertRaises(MyUserModel.DoesNotExist, msg=""):
             MyUserModel.objects.get(user_id=361)
 
     def test_delete_course3(self):
         a = Driver()
-        a.addCourse(337, "CS337")
+        a.addCourse("337", "Comp Sci", "CS337")
         a.deleteCourse(337)
         with self.assertRaises(MyUserModel.DoesNotExist, msg=""):
             MyUserModel.objects.get(user_id=337)
 
     def test_too_many_args(self):
-        with self.assertRaises(OverflowError, msg="too many arguments"):
+        with self.assertRaises(TypeError, msg="too many arguments"):
             a = Driver()
-            a.deleteCourse_(123, "CS361", 801)
+            a.deleteCourse(123, "CS361", 801)
 
     def test_no_args(self):
         with self.assertRaises(TypeError, msg=" no argument"):
             b = Driver()
-            b.deleteCourse_()
+            b.deleteCourse()
 
     def test_invalid_args(self):
-        with self.assertRaises(TypeError, msg=" invalid arguments"):
+        with self.assertRaises(ValueError, msg=" invalid arguments"):
             c = Driver()
-            c.deleteCourse_("id")
+            c.deleteCourse("id")

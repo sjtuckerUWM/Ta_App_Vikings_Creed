@@ -35,7 +35,8 @@ class Login(View):
 # view for home page
 class Home(View):
     def get(self, request):
-        return render(request, "mainTemplates/homePage.html")
+        role_id = MyUserModel.objects.get(email=request.session["currentUser"]).role
+        return render(request, "mainTemplates/homePage.html", {"role_id": role_id})
 
 # view for Account management
 class AccountManagement(View):
