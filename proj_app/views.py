@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 
-from proj_app.models import MyUserModel, CourseModel, Department, SectionModel
+from proj_app.models import MyUserModel, CourseModel, Department
 from classes.Driver import Driver
 
 
@@ -189,14 +189,6 @@ class AddCourse(View):
             "departments": Department.choices
         }
         return render(request, "mainTemplates/addCoursePage.html", values)
-
-
 class AssignToCourse(View):
     def get(self, request, id):
         return render(request, "mainTemplates/assignToCoursePage.html")
-
-
-class SectionManagement(View):
-    def get(self, request, id):
-        sections = list(SectionModel.objects.all())
-        return render(request, "mainTemplates/sectionManagement.html", {"sections": sections})
