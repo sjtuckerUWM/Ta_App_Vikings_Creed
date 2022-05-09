@@ -3,6 +3,7 @@ from classes.section import Section
 
 class Course:
 
+    #Constructor
     def __init__(self, courseID=1, courseDep="COMP SCI", CourseName="Intro to CS"):
         self.courseID = courseID
         self.courseDep = courseDep
@@ -22,6 +23,7 @@ class Course:
             self.sectionList.append(s)
             return True
 
+        #if Courseid doesn't match with CourseNum
         return False
 
     def DeleteSection(self, SectionID):
