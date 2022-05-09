@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Assign Course: {{Course}}</h1>
-<form action="/addCourse/" method="post">
+<h1>Assign Course: {{course.name}}</h1>
+<form action="/assignToCourse/{{ course.course_id }}/" method="post">
     {% csrf_token %}
     <table>
 
@@ -14,7 +14,7 @@
                 <select name="instructor">
                 <option selected value="{{ instructor.user_id }}">{{instructor.name}}</option>
                     {% for i in instructorList %}
-                    <option value="{{ i.user_od }}">{{ i.name }}</option>
+                    <option value="{{ i.user_id }}">{{ i.name }}</option>
                     {% endfor %}
                 </select>
             </td>
@@ -27,9 +27,13 @@
         </tr>
         <tr>
             <td>
-                <select name="tas" multiple>
+                <select name="taIDs" multiple>
                     {% for i in taList %}
-                    <option value="{{ i.user_od }}">{{ i.name }}</option>
+                         {% if i in tas%}
+                            <option selected value="{{ i.user_id }}">{{ i.name }}</option>
+                         {% else %}
+                            <option value="{{ i.user_id }}">{{ i.name }}</option>
+                         {% endif %}
                     {% endfor %}
                  </select>
             </td>
@@ -38,4 +42,5 @@
     </table>
     <input type="submit" value="Submit" />
 </form>
+    <a href="/courses/"> Back to Course Management </a>
 {% endblock %}
