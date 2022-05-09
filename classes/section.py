@@ -6,6 +6,7 @@ class Section:
     sectNum = 0
     meetingInfo = ""
 
+    # constructors
     def __init__(self):
         pass
 

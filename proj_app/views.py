@@ -6,49 +6,52 @@ from classes.Driver import Driver
 
 
 
-# Create your views here.
+# view for Login
 class Login(View):
+    # get method to render HTML page of Login
     def get(self, request):
         return render(request, "mainTemplates/loginPage.html")
 
+
     def post(self, request):
         driver = Driver()
-        email = request.POST['email']
-        password = request.POST['password']
+        email = request.POST['email']  # posting the email
+        password = request.POST['password']   # posting the password
         print(email)
         print(password)
-        outcome = driver.logIn(email, password)
+        outcome = driver.logIn(email, password)  # getting the outcome
 
-        if outcome == 0:
+        if outcome == 0:   # if email is bad
             return render(request, "mainTemplates/loginPage.html", {"message": "email is not registered"})
-        elif outcome == 1:
+        elif outcome == 1:  # if password bad
             return render(request, "mainTemplates/loginPage.html", {"message": "bad password"})
-        elif outcome == 2:
+        elif outcome == 2:  # if both correct
 
             request.session["currentUser"] = driver.getCurrentAccount().getEmail()
             return redirect('/home/')  # place url from url.py
         else:
             return render(request, "mainTemplates/loginPage.html", {"message": "login error"})
 
-
+# view for home page
 class Home(View):
     def get(self, request):
         role_id = MyUserModel.objects.get(email=request.session["currentUser"]).role
         return render(request, "mainTemplates/homePage.html", {"role_id": role_id})
 
-
+# view for Account management
 class AccountManagement(View):
     def get(self, request):
-        users = list(MyUserModel.objects.all())
+        users = list(MyUserModel.objects.all())  # getting all the users
         return render(request, "mainTemplates/accountManagement.html", {"users": users})
 
-
+#  view for Add account
 class AddAccount(View):
     def get(self, request):
         return render(request, "mainTemplates/addAccountPage.html")
 
     def post(self, request):
-        driver = Driver(request.session["currentUser"])
+        driver = Driver(request.session["currentUser"])  # getting the current user in Driver
+        # posting the parameters
         id = request.POST['id']
         email = request.POST['email']
         password = request.POST['password']
@@ -56,11 +59,13 @@ class AddAccount(View):
         address = request.POST['address']
         phoneNum = request.POST['phoneNum']
         role = request.POST['role']
-        message = 'Blank parameter or paramaters'
+        message = 'Blank parameter or parameters'
 
+        # Context for Acceptance test
         if id == '' or email == '' or password == '' or name == '' or address == '' or phoneNum == '' or role == '':
             return render(request, "mainTemplates/addAccountPage.html", {'message': message})
 
+        # verifying parameters are not blank and making sure parameters aligned correctly
         verify = driver.addAccount(id, email, password, name, address, phoneNum, role)
         if verify == ["","","","","","",""]:
             return redirect("/accounts")
@@ -81,34 +86,38 @@ class AddAccount(View):
         return render(request, "mainTemplates/addAccountPage.html", values)
 
 
-
+# view for delete page
 class DeleteAccount(View):
     def get(self, request, id):
         print(str(id))
         return render(request, "mainTemplates/deleteAccountPage.html")
 
     def post(self, request, id):
-        driver = Driver(request.session["currentUser"])
-        driver.deleteAccount(id)
+        driver = Driver(request.session["currentUser"])  # getting the current user
+        driver.deleteAccount(id)  # deleting
         return redirect("/accounts")
 
+# view for Edit account
 class EditAccount(View):
     def get(self, request, id):
         print(str(id))
         driver = Driver(request.session["currentUser"])
-        account = driver.accountList[MyUserModel.objects.get(user_id=id).email]
+        account = driver.accountList[MyUserModel.objects.get(user_id=id).email]  # getting the account by user id
         verify = ["", "", "", "", "", "", ""]
         roleStr = ""
-        role = MyUserModel.objects.get(user_id=id).role
+        role = MyUserModel.objects.get(user_id=id).role  # getting the role
         request.session['editRole'] = role
 
+        # checking the roles
         if(role == 0):
             roleStr = "Supervisor"
         elif(role == 1):
             roleStr = "Instructor"
         elif(role == 2):
             roleStr = "TA"
-        request.session['editRoleString'] = roleStr
+        request.session['editRoleString'] = roleStr   # putting blank role
+
+        # verifying all parameters aligned correctly
         values = {
             'id': account.getID(),
             'email': account.getEmail(),
@@ -128,6 +137,7 @@ class EditAccount(View):
 
     def post(self, request, id):
         oldID = id
+        # getting the current user and posting the parameters
         driver = Driver(request.session["currentUser"])
         inputID = request.POST['id']
         email = request.POST['email']
@@ -138,11 +148,11 @@ class EditAccount(View):
         role = request.session['editRole']
         verify = driver.editAccount(oldID, inputID, email, password, name, address, phoneNum, role)
         if verify == ["", "", "", "", "", "", ""]:
-            return redirect("/accounts")
+            return redirect("/accounts")   # returning the accounts if parameters are blank
 
         roleStr = request.session['editRoleString']
 
-
+        # verifying all parameters aligned correctly
         values = {
             'id': request.POST['id'],
             'email': request.POST['email'],
@@ -160,22 +170,27 @@ class EditAccount(View):
         }
         return render(request, "mainTemplates/editAccountPage.html", values)
 
+# view for Manage Course page
 class ManageCourse(View):
     def get(self, request):
-        courses = list(CourseModel.objects.all())
+        courses = list(CourseModel.objects.all())  # getting all the courses
         return render(request, "mainTemplates/courseManagement.html", {"courses": courses})
+
+# view for Add course page
 class AddCourse(View):
     def get(self, request):
         return render(request, "mainTemplates/addCoursePage.html", {"departments": Department.choices})
 
     def post(self, request):
-        print(Department('COMP SCI').name)
+        print(Department('COMP SCI').name)  # printing department name
         # print(Department['Comp Sci'])
         driver = Driver(request.session["currentUser"])
         id = request.POST['id']
         dep = request.POST['dep']
         print("dep is " + dep)
         name = request.POST['name']
+
+        # verifying page goes back to courses page if parameters are blank, and check to see parameters aligned correctly
         verify = driver.addCourse(id, dep, name)
         if verify == ["", "", ""]:
             return redirect("/courses")
@@ -189,6 +204,8 @@ class AddCourse(View):
             "departments": Department.choices
         }
         return render(request, "mainTemplates/addCoursePage.html", values)
+
+
 class AssignToCourse(View):
     def get(self, request, id):
         curCourse = CourseModel.objects.get(course_id=id)
