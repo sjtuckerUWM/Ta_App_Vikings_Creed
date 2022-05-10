@@ -174,7 +174,18 @@ class EditAccount(View):
 class ManageCourse(View):
     def get(self, request):
         courses = list(CourseModel.objects.all())  # getting all the courses
-        return render(request, "mainTemplates/courseManagement.html", {"courses": courses})
+        user = MyUserModel.objects.get(email=request.session["currentUser"])
+        missingPeople = False
+
+        # checks if there are no tas and no instructors
+        print("instructors: " + str(list(MyUserModel.objects.filter(role=1))))
+        print("tas: " + str(list(MyUserModel.objects.filter(role=2))))
+        if (list(MyUserModel.objects.filter(role=1)) == [] and list(MyUserModel.objects.filter(role=2)) == []):
+            missingPeople = True
+
+
+
+        return render(request, "mainTemplates/courseManagement.html", {"courses": courses, 'user': user, 'missingPeople': missingPeople})
 
 # view for Add course page
 class AddCourse(View):
@@ -209,10 +220,12 @@ class AddCourse(View):
 class AssignToCourse(View):
     def get(self, request, id):
         curCourse = CourseModel.objects.get(course_id=id)
+        user = MyUserModel.objects.get(email=request.session["currentUser"])
         values = {
             'course': curCourse,
             'instructorList': list(MyUserModel.objects.filter(role=1).all()),
             'taList': list(MyUserModel.objects.filter(role=2).all()),
+            'user': user,
         }
         print(curCourse.assigned_instructor)
         if (curCourse.assigned_instructor is not None):
