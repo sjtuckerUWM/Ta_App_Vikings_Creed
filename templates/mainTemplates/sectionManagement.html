@@ -19,7 +19,7 @@
             </tr>
             <tr>
                 <select name="TA">
-                <option selected value="{{ TA }}">{{ TA }}</option>
+{#                <option selected value="{{ TA }}">{{ TA }}</option>#}
                     {% for i in TAs %}
                     <option value="{{ i.0 }}">{{ i.0 }}</option>
                     {% endfor %}
@@ -30,18 +30,19 @@
         <input type="submit" value="Submit" style="margin-left:80px"/>
     </form>
 
+    <form action="/sections/{{id}}/" method="post">
     <table style="width:20%">
       <tr>
         <th>Lab ID</th>
         <th> </th>
         <th>TA</th>
       </tr>
+        {% for i in sections %}
       <tr>
-          {% for i in section %}
-              <tr>{{ i.name }}</tr>
+          <td>{{ i.name }}</td>
 
-          {% endfor %}
       </tr>
+        {% endfor %}
       <tr>
         <td>sample section: 804</td>
         <td></td></td>
@@ -53,4 +54,5 @@
         <td>sample TA: TA 3</td>
       </tr>
     </table>
+    </form>
 {% endblock %}
