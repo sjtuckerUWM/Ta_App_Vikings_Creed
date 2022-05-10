@@ -48,7 +48,7 @@
                     </p>
                 </div>
                 <div class="col-1 text-center">
-                    <a type="button" class="btn btn-secondary mt-1 px-4"{% if missingPeople %} href="/assignToCourse/{{ i.course_id }}" {% endif %}>Assign</a>
+                    <a type="button" class="btn btn-secondary mt-1 px-4"{% if not missingPeople %} href="/assignToCourse/{{ i.course_id }}" {% endif %}>Assign</a>
                 </div>
                 <div class="col-1 text-center">
                     <a type="button" class="btn btn-secondary mt-1 px-4" href="/sections/{{ i.course_id }}">Sections</a>

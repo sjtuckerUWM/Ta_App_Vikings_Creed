@@ -178,7 +178,9 @@ class ManageCourse(View):
         missingPeople = False
 
         # checks if there are no tas and no instructors
-        if (list(MyUserModel.objects.filter(role=1)) == [] or list(MyUserModel.objects.filter(role=2)) == []):
+        print("instructors: " + str(list(MyUserModel.objects.filter(role=1))))
+        print("tas: " + str(list(MyUserModel.objects.filter(role=2))))
+        if (list(MyUserModel.objects.filter(role=1)) == [] and list(MyUserModel.objects.filter(role=2)) == []):
             missingPeople = True
 
 
