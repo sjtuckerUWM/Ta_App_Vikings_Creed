@@ -12,7 +12,7 @@
         <tr>
             <td>
                 <select name="instructor">
-                <option selected value="{{ instructor.user_id }}">{{instructor.name}}</option>
+                <option selected {% if user.role == 1%} disabled {% endif %} value="{{ instructor.user_id }}">{{instructor.name}}</option>
                     {% for i in instructorList %}
                     <option value="{{ i.user_id }}">{{ i.name }}</option>
                     {% endfor %}
@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <td>
-                <select name="taIDs" multiple>
+                <select {% if user.role == 1%} disabled {% endif %} name="taIDs" multiple>
                     {% for i in taList %}
                          {% if i in tas%}
                             <option selected value="{{ i.user_id }}">{{ i.name }}</option>
@@ -40,7 +40,9 @@
             <td>{{ v_tas }}</td>
         </tr>
     </table>
+    {% if user.role != 1%}
     <input type="submit" value="Submit" />
+    {% endif %}
 </form>
     <a href="/courses/"> Back to Course Management </a>
 {% endblock %}

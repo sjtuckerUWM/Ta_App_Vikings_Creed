@@ -14,7 +14,6 @@ class Driver(object):
         self.accountList = {}
         self.courseList = {}
         # self.addAccount(1, "email@a.com", "pass", "Test User", "USA", "123-456-7890", 0)
-        c = CourseModel(course_id=5,dept_code="BIO SCI", name="coursename")
         self.fillAccounts()
         self.fillCourses()
         # to see if logIn works VVV
