@@ -5,21 +5,23 @@ from proj_app.models import MyUserModel, CourseModel, Department
 from classes.Driver import Driver
 
 
+
 # view for Login
 class Login(View):
     # get method to render HTML page of Login
     def get(self, request):
         return render(request, "mainTemplates/loginPage.html")
 
+
     def post(self, request):
         driver = Driver()
         email = request.POST['email']  # posting the email
-        password = request.POST['password']  # posting the password
+        password = request.POST['password']   # posting the password
         print(email)
         print(password)
         outcome = driver.logIn(email, password)  # getting the outcome
 
-        if outcome == 0:  # if email is bad
+        if outcome == 0:   # if email is bad
             return render(request, "mainTemplates/loginPage.html", {"message": "email is not registered"})
         elif outcome == 1:  # if password bad
             return render(request, "mainTemplates/loginPage.html", {"message": "bad password"})
@@ -30,20 +32,17 @@ class Login(View):
         else:
             return render(request, "mainTemplates/loginPage.html", {"message": "login error"})
 
-
 # view for home page
 class Home(View):
     def get(self, request):
         role_id = MyUserModel.objects.get(email=request.session["currentUser"]).role
         return render(request, "mainTemplates/homePage.html", {"role_id": role_id})
 
-
 # view for Account management
 class AccountManagement(View):
     def get(self, request):
         users = list(MyUserModel.objects.all())  # getting all the users
         return render(request, "mainTemplates/accountManagement.html", {"users": users})
-
 
 #  view for Add account
 class AddAccount(View):
