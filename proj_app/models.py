@@ -35,6 +35,6 @@ class SectionModel(models.Model):
     section_id = models.AutoField(primary_key=True)
 
     course = models.ForeignKey(CourseModel, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, null=True)
     grader = models.BooleanField(default=False)
-    assigned_ta = models.ForeignKey(MyUserModel, on_delete=models.PROTECT)
+    assigned_ta = models.ForeignKey(MyUserModel, null=True, on_delete=models.SET_NULL)

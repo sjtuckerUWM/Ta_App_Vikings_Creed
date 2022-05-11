@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 
-from proj_app.models import MyUserModel, CourseModel, Department
+from proj_app.models import MyUserModel, CourseModel, Department, SectionModel
 from classes.Driver import Driver
 
 
@@ -58,12 +58,10 @@ class AddAccount(View):
         name = request.POST['name']
         address = request.POST['address']
         phoneNum = request.POST['phoneNum']
-        role = request.POST['role']
-        message = 'Blank parameter or parameters'
+        role = int(request.POST['role'])
+        print(role)
+        print(role is int)
 
-        # Context for Acceptance test
-        if id == '' or email == '' or password == '' or name == '' or address == '' or phoneNum == '' or role == '':
-            return render(request, "mainTemplates/addAccountPage.html", {'message': message})
 
         # verifying parameters are not blank and making sure parameters aligned correctly
         verify = driver.addAccount(id, email, password, name, address, phoneNum, role)
@@ -76,12 +74,14 @@ class AddAccount(View):
             'name': request.POST['name'],
             'address': request.POST['address'],
             'phoneNum': request.POST['phoneNum'],
+            'role: ': request.POST['role'],
             'v_id': verify[0],
             'v_email': verify[1],
             'v_password': verify[2],
             'v_name': verify[3],
             'v_address': verify[4],
             'v_phoneNum': verify[5],
+            'v_role': verify[6],
         }
         return render(request, "mainTemplates/addAccountPage.html", values)
 
@@ -262,3 +262,64 @@ class AssignToCourse(View):
         curCourse.save()
 
         return render(request, "mainTemplates/assignToCoursePage.html", values)
+class ManageSections(View):
+    def get(self, request, id):
+        curCourse = CourseModel.objects.get(course_id=id)
+        values = {
+            'course': curCourse,
+            'taList': list(curCourse.assigned_tas.all()),
+            'sectionList': list(SectionModel.objects.filter(course=curCourse).all())
+            # section model has a course field, but course doesn't have a sections field
+        }
+        return render(request, "mainTemplates/sectionManagement.html", values)
+
+    def post(self, request, id):
+        driver = Driver(request.session["currentUser"])
+        curCourse = CourseModel.objects.get(course_id=id)
+        sectionList = list(SectionModel.objects.filter(course=curCourse).all())
+        for i in sectionList:
+            taID = request.POST[("TA/" + str(i.section_id))]
+            i.assigned_ta = MyUserModel.objects.get(user_id=taID)
+            i.save()
+
+        # prob not needed
+        sectionList = list(SectionModel.objects.filter(course=curCourse).all())
+
+        values = {
+            'course': curCourse,
+            'taList': list(curCourse.assigned_tas.all()),
+            'sectionList': sectionList
+            # section model has a course field, but course doesn't have a sections field
+        }
+        return render(request, "mainTemplates/sectionManagement.html", values)
+
+
+class AddSection(View):
+    def get(self, request, id):
+        curCourse = CourseModel.objects.get(course_id=id)
+        values = {
+            'course': curCourse,
+            'taList': list(curCourse.assigned_tas.all()),
+        }
+        return render(request, "mainTemplates/addSectionPage.html", values)
+
+    def post(self, request, id):
+        curCourse = CourseModel.objects.get(course_id=id)
+        sectionNumber = request.POST['SectionNumber']
+        ta = request.POST['TA']
+        if sectionNumber != '':
+            newSection = SectionModel(name=sectionNumber, course=curCourse)
+            if ta != '':
+                newSection.assigned_ta = MyUserModel.objects.get(user_id=int(ta))
+            newSection.save()
+            return redirect("/sections/" + str(id) + "/" )
+
+
+
+        values = {
+            'course': curCourse,
+            'v_num': 'Enter A Section Number!',
+            'taList': list(curCourse.assigned_tas.all()),
+            # section model has a course field, but course doesn't have a sections field
+        }
+        return render(request, "mainTemplates/addSectionPage.html", values)

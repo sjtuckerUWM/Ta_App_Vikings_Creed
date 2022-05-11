@@ -90,6 +90,7 @@ class Driver(object):
 
         # checking if phoneNum is correct form
         if (re.findall("[0-9]{3}\-[0-9]{3}\-[0-9]{4}|[0-9]{10}", phoneNum) != [phoneNum]): a[5] =  "Invalid, Format should be: \"123-456-7890\" OR \"1234567890\""
+        if (role is None): a[6] = "Invalid, Select"
         if a != ["","","","","","",""]:
             return a
 
