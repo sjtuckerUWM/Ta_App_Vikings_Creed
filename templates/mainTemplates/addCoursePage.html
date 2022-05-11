@@ -1,42 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Add Course</h1>
-<form action="/addCourse/" method="post">
-    {% csrf_token %}
-    <table>
-        <tr>
-            <td><label for="id">Course ID</label></td>
-        </tr>
-        <tr>
-            <td><input name="id" type="text" value="{{ id }}"/></td>
-            <td>{{ v_id }}</td>
-        </tr>
+<div class="container">
+        <div class="row m-4">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div class="card text-white bg-dark text-center my-2 py-3">
+                    <h1>ADD COURSE</h1>
+                </div>
+            </div>
+            <div class="col-2 text-center">
+                <a href = '/' type="button" class="btn btn-danger my-4" style="font-size: 20px">LOG OUT</a>
+            </div>
+        </div>
+    </div>
 
-        <tr>
-            <td><label for="dep">Course Department</label></td>
-        </tr>
-        <tr>
-            <td>
-                <select name="dep" id="dep">
-                <option selected value="{{ dep }}">{{dep}}</option>
+    <div class="row">
+        <form action="/addCourse/" method="post">
+            {% csrf_token %}
+            <div class="container col-5 p-2">
+                <label style="font-size: 16px" for="id" class="px-2">Course ID
+                    <div class="text-danger">
+                        {{ v_id }}
+                    </div>
+                </label>
+                <input style="border-radius: 45px" type="text" name="id" class="form-control mb-2 pb-1" placeholder="Course ID" value="{{ id }}">
+                <label style="font-size: 16px" for="role" class="px-2">Course Department
+                    <div class="text-danger">
+                        {{ v_dep }}
+                    </div>
+                </label>
+                <select style="border-radius: 45px" name="dep" id="dep" class="form-control mb-2 pb-1">
+                    <option value="{{ dep }}">{{ dep }}</option>
                     {% for i in departments %}
-                    <option value="{{ i.0 }}">{{ i.0 }}</option>
+                        <option value="{{ i.0 }}">{{ i.0 }}</option>
                     {% endfor %}
                 </select>
-            </td>
-            <td>{{ v_dep }}</td>
-        </tr>
-
-
-        <tr>
-            <td><label for="name">Course Name</label></td>
-        </tr>
-        <tr>
-            <td><input name="name" type="text" value="{{ name }}" /></td>
-            <td>{{ v_name }}</td>
-        </tr>
-    </table>
-    <input type="submit" value="Submit" />
-</form>
+                <label style="font-size: 16px" for="name" class="px-2">Course Name
+                    <div class="text-danger">
+                        {{ v_name }}
+                    </div>
+                </label>
+                <input style="border-radius: 45px" type="text" name="name" class="form-control mb-2 pb-1" placeholder="Course Name" value="{{ name }}" >
+                <div class="text-center">
+                    <input style="font-size: 24px" type="submit" value="ADD" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="container">
+            <div class="row">
+                <div class="col-3"></div>
+                <a href = '/courses/' type="button" class="btn btn-warning col-4 mx-auto my-5 py-2" style="font-size: 24px">Back to Course Management</a>
+                <div class="col-3"></div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
