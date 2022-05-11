@@ -74,6 +74,7 @@ class AddAccount(View):
             'name': request.POST['name'],
             'address': request.POST['address'],
             'phoneNum': request.POST['phoneNum'],
+            'role: ': request.POST['role'],
             'v_id': verify[0],
             'v_email': verify[1],
             'v_password': verify[2],
