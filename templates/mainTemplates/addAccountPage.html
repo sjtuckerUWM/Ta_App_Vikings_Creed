@@ -23,42 +23,42 @@
                         {{ v_id }}
                     </div>
                 </label>
-                <input style="border-radius: 45px" type="text" name="id" class="form-control mb-2 pb-1" placeholder="User ID">
+                <input style="border-radius: 45px" type="text" name="id" class="form-control mb-2 pb-1" placeholder="User ID"value = {{ id }} >
                 <label style="font-size: 16px" for="email" class="px-2">Email
                     <div class="text-danger">
                         {{ v_email }}
                     </div>
                 </label>
-                <input style="border-radius: 45px" type="text" name="email" class="form-control mb-2 pb-1" placeholder="Email">
+                <input style="border-radius: 45px" type="text" name="email" class="form-control mb-2 pb-1" placeholder="Email"value = {{ email }} >
                 <label style="font-size: 16px" for="password" class="px-2">Password
                     <div class="text-danger">
                     {{ v_password }}
                     </div>
                 </label>
-                <input style="border-radius: 45px" type="text" name="password" class="form-control mb-2 pb-1" placeholder="Password">
+                <input style="border-radius: 45px" type="text" name="password" class="form-control mb-2 pb-1" placeholder="Password"value = {{ password }}>
                 <label style="font-size: 16px" for="name" class="px-2">Name
                     <div class="text-danger">
                     {{ v_name }}
                     </div>
                 </label>
-                <input style="border-radius: 45px" type="text" name="name" class="form-control mb-2 pb-1" placeholder="Name">
+                <input style="border-radius: 45px" type="text" name="name" class="form-control mb-2 pb-1" placeholder="Name"value = {{ name }} >
                 <label style="font-size: 16px" for="address" class="px-2">Address
                     <div class="text-danger">
                     {{ v_address }}
                     </div>
                 </label>
-                <input style="border-radius: 45px" type="text" name="address" class="form-control mb-2 pb-1" placeholder="Address">
+                <input style="border-radius: 45px" type="text" name="address" class="form-control mb-2 pb-1" placeholder="Address"value = {{ address }} >
                 <label style="font-size: 16px" for="phoneNum" class="px-2">Phone Number
                     <div class="text-danger">
                     {{ v_phoneNum }}
                     </div>
                 </label>
-                <input style="border-radius: 45px" type="text" name="phoneNum" class="form-control mb-2 pb-1" placeholder="##########">
+                <input style="border-radius: 45px" type="text" name="phoneNum" class="form-control mb-2 pb-1" placeholder="##########"value={{ phoneNum }} >
                 <label style="font-size: 16px" for="role" class="px-2">Role</label>
                 <select style="border-radius: 45px" name="role" id="role" class="form-control mb-2 pb-1">
-                    <option value="0">Supervisor</option>
-                    <option value="1">Instructor</option>
-                    <option value="2">TA</option>
+                    <option {% if role == "0" %} selected {% endif %} value="0">Supervisor</option>
+                    <option {% if role == "1" %} selected {% endif %} value="1">Instructor</option>
+                    <option {% if role == "2" %} selected {% endif %} value="2">TA</option>
                 </select>
                 <div class="text-center">
                     <input style="font-size: 24px" type="submit" value="ADD" class="btn btn-primary">
