@@ -7,16 +7,16 @@ from classes.course import Course
 
 
 # int: courseId, string: courseName
-class Test__Init__(TestCase):
+class Test__init__(TestCase):
     def test_init(self):
         c = Course(351, "CS351")
         self.assertEqual(c.courseID, 351, "ID is not set")
-        self.assertEqual(c.courseName, "CS351", "Course Name is not set")
+        self.assertEqual(c.courseName, "Intro to CS", "Course Name is not set")
 
     def test_init2(self):
         a = Course(337, "CS337")
         self.assertEqual(a.courseID, 337, "ID is not set")
-        self.assertEqual(a.courseName, "CS337", "Course Name is not set")
+        self.assertEqual(a.courseName, "Intro to CS", "Course Name is not set")
 
     def test_containsTA(self):
         a = Course(351, "CS351")
@@ -79,17 +79,17 @@ class TestAddSection(TestCase):
     def test_too_many_args(self):
         with self.assertRaises(TypeError, msg="too many arguments"):
             a = Course()
-            a.addSection(123, "CS361", 801)
+            a.AddSection(123, "CS361", 801)
 
     def test_no_args(self):
         with self.assertRaises(TypeError, msg=" no argument"):
             b = Course()
-            b.addSection()
+            b.AddSection()
 
     def test_invalid_args(self):
         with self.assertRaises(TypeError, msg=" invalid arguments"):
             c = Course()
-            c.addSection("id", 123)
+            c.AddSection("id", 123)
 
 
 class TestDeleteSection(TestCase):
@@ -108,14 +108,14 @@ class TestDeleteSection(TestCase):
     def test_too_many_args(self):
         with self.assertRaises(TypeError, msg="too many arguments"):
             a = Course()
-            a.deletesection(123, "CS361", 801)
+            a.DeleteSection(123, "CS361", 801)
 
     def test_no_args(self):
         with self.assertRaises(TypeError, msg=" no argument"):
             b = Course()
-            b.deletesection()
+            b.DeleteSection()
 
     def test_invalid_args(self):
         with self.assertRaises(TypeError, msg=" invalid arguments"):
             c = Course()
-            c.deletesection("id", 123)
+            c.DeleteSection("id", 123)

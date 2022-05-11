@@ -9,6 +9,7 @@ class Course:
         self.courseDep = courseDep
         self.courseName = CourseName
         self.TA_list = []
+        self.sectionList = []
 
     def assignTA(self, TA_list):
         self.setTA_list(TA_list)
@@ -23,7 +24,7 @@ class Course:
             self.sectionList.append(s)
             return True
 
-        #if Courseid doesn't match with CourseNum
+        # if courseID doesn't match with CourseNum
         return False
 
     def DeleteSection(self, SectionID):
@@ -72,5 +73,5 @@ class Course:
             self.sectionList.append(i)
 
     def setTA_list(self, TA_list):
-        for i in TA_list:
-            self.TA_list.append(i)
+        #for i in self.TA_list:
+        self.TA_list.append(TA_list)
