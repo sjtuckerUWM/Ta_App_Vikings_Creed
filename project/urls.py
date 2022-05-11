@@ -16,7 +16,7 @@
 from django.contrib import admin
 from django.urls import path
 from proj_app.views import Login, Home, AccountManagement, AddAccount, DeleteAccount, \
-    EditAccount, ManageCourse, AddCourse, AssignToCourse, ManageSections, AddSection
+    EditAccount, ManageCourse, AddCourse, AssignToCourse, ManageSections, AddSection, Contact
 #
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,5 +31,6 @@ urlpatterns = [
     path('assignToCourse/<int:id>/', AssignToCourse.as_view()),
     path('sections/<int:id>/', ManageSections.as_view()),
     path('addSection/<int:id>/', AddSection.as_view())
+    path('contact/',Contact.as_view())
 ]
 

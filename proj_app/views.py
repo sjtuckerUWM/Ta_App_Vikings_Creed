@@ -5,23 +5,21 @@ from proj_app.models import MyUserModel, CourseModel, Department, SectionModel
 from classes.Driver import Driver
 
 
-
 # view for Login
 class Login(View):
     # get method to render HTML page of Login
     def get(self, request):
         return render(request, "mainTemplates/loginPage.html")
 
-
     def post(self, request):
         driver = Driver()
         email = request.POST['email']  # posting the email
-        password = request.POST['password']   # posting the password
+        password = request.POST['password']  # posting the password
         print(email)
         print(password)
         outcome = driver.logIn(email, password)  # getting the outcome
 
-        if outcome == 0:   # if email is bad
+        if outcome == 0:  # if email is bad
             return render(request, "mainTemplates/loginPage.html", {"message": "email is not registered"})
         elif outcome == 1:  # if password bad
             return render(request, "mainTemplates/loginPage.html", {"message": "bad password"})
@@ -32,17 +30,20 @@ class Login(View):
         else:
             return render(request, "mainTemplates/loginPage.html", {"message": "login error"})
 
+
 # view for home page
 class Home(View):
     def get(self, request):
         role_id = MyUserModel.objects.get(email=request.session["currentUser"]).role
         return render(request, "mainTemplates/homePage.html", {"role_id": role_id})
 
+
 # view for Account management
 class AccountManagement(View):
     def get(self, request):
         users = list(MyUserModel.objects.all())  # getting all the users
         return render(request, "mainTemplates/accountManagement.html", {"users": users})
+
 
 #  view for Add account
 class AddAccount(View):
@@ -65,7 +66,7 @@ class AddAccount(View):
 
         # verifying parameters are not blank and making sure parameters aligned correctly
         verify = driver.addAccount(id, email, password, name, address, phoneNum, role)
-        if verify == ["","","","","","",""]:
+        if verify == ["", "", "", "", "", "", ""]:
             return redirect("/accounts")
         values = {
             'id': request.POST['id'],
@@ -97,6 +98,7 @@ class DeleteAccount(View):
         driver.deleteAccount(id)  # deleting
         return redirect("/accounts")
 
+
 # view for Edit account
 class EditAccount(View):
     def get(self, request, id):
@@ -109,13 +111,13 @@ class EditAccount(View):
         request.session['editRole'] = role
 
         # checking the roles
-        if(role == 0):
+        if (role == 0):
             roleStr = "Supervisor"
-        elif(role == 1):
+        elif (role == 1):
             roleStr = "Instructor"
-        elif(role == 2):
+        elif (role == 2):
             roleStr = "TA"
-        request.session['editRoleString'] = roleStr   # putting blank role
+        request.session['editRoleString'] = roleStr  # putting blank role
 
         # verifying all parameters aligned correctly
         values = {
@@ -148,7 +150,7 @@ class EditAccount(View):
         role = request.session['editRole']
         verify = driver.editAccount(oldID, inputID, email, password, name, address, phoneNum, role)
         if verify == ["", "", "", "", "", "", ""]:
-            return redirect("/accounts")   # returning the accounts if parameters are blank
+            return redirect("/accounts")  # returning the accounts if parameters are blank
 
         roleStr = request.session['editRoleString']
 
@@ -170,6 +172,7 @@ class EditAccount(View):
         }
         return render(request, "mainTemplates/editAccountPage.html", values)
 
+
 # view for Manage Course page
 class ManageCourse(View):
     def get(self, request):
@@ -183,9 +186,9 @@ class ManageCourse(View):
         if (list(MyUserModel.objects.filter(role=1)) == [] and list(MyUserModel.objects.filter(role=2)) == []):
             missingPeople = True
 
+        return render(request, "mainTemplates/courseManagement.html",
+                      {"courses": courses, 'user': user, 'missingPeople': missingPeople})
 
-
-        return render(request, "mainTemplates/courseManagement.html", {"courses": courses, 'user': user, 'missingPeople': missingPeople})
 
 # view for Add course page
 class AddCourse(View):
@@ -230,9 +233,10 @@ class AssignToCourse(View):
         print(curCourse.assigned_instructor)
         if (curCourse.assigned_instructor is not None):
             values['instructor'] = curCourse.assigned_instructor
-        if (curCourse.assigned_tas is not None ):
+        if (curCourse.assigned_tas is not None):
             values['tas'] = list(curCourse.assigned_tas.all())
         return render(request, "mainTemplates/assignToCoursePage.html", values)
+
     def post(self, request, id):
 
         driver = Driver(request.session["currentUser"])
@@ -244,7 +248,7 @@ class AssignToCourse(View):
             'taList': list(MyUserModel.objects.filter(role=2).all()),
         }
         print(request.POST['instructor'])
-        if(request.POST['instructor']!=''):
+        if (request.POST['instructor'] != ''):
             instruct = MyUserModel.objects.get(user_id=request.POST['instructor'])
             values['instructor'] = instruct
             curCourse.assigned_instructor = instruct
@@ -323,3 +327,17 @@ class AddSection(View):
             # section model has a course field, but course doesn't have a sections field
         }
         return render(request, "mainTemplates/addSectionPage.html", values)
+
+
+class Contact(View):
+    def get(self, request):
+        supervisors = list(MyUserModel.objects.filter(role=0).all())  # getting all the users
+        instructors = list(MyUserModel.objects.filter(role=1).all())
+        TAs = list(MyUserModel.objects.filter(role=2).all())
+        values = {
+            "supervisors": supervisors,
+            "instructors": instructors,
+            "TAs": TAs
+        }
+        return render(request, "mainTemplates/contactsPage.html", values)
+
