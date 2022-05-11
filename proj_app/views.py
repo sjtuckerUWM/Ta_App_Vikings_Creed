@@ -321,3 +321,16 @@ class AddSection(View):
             # section model has a course field, but course doesn't have a sections field
         }
         return render(request, "mainTemplates/addSectionPage.html", values)
+
+class Contact(View):
+    def get(self, request):
+        supervisors = list(MyUserModel.objects.filter(role=0).all())  # getting all the users
+        instructors = list(MyUserModel.objects.filter(role=1).all())
+        TAs = list(MyUserModel.objects.filter(role=2).all())
+        values = {
+            "supervisors": supervisors,
+            "instructors": instructors,
+            "TAs": TAs
+        }
+        return render(request, "mainTemplates/contactsPage.html", values)
+
