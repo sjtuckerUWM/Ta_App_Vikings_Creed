@@ -43,7 +43,7 @@ class MyTestAddAccount(TestCase):
 
         users = MyUserModel.objects.all()
 
-        self.assertEqual(len(users),1)
+        self.assertEqual(len(users),2)
 
        # self.assertEqual(resp.context['message'],'Blank parameter or paramaters')
 
