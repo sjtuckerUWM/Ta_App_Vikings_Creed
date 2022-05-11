@@ -215,6 +215,12 @@ class AssignToCourse(View):
             'taList': list(MyUserModel.objects.filter(role=2).all()),
         }
         print(curCourse.assigned_instructor)
+
+        if (len(values['instructorList']) < 1) :
+            return render(request, "mainTemplates/assignToCoursePage.html",{'error': 'There is no instructor to assign'})
+        if (len(values['taList']) < 1) :
+            return render(request, "mainTemplates/assignToCoursePage.html",{'error': 'There is no TA to assign'})
+
         if (curCourse.assigned_instructor is not None):
             values['instructor'] = curCourse.assigned_instructor
         if (curCourse.assigned_tas is not None ):
@@ -248,4 +254,4 @@ class AssignToCourse(View):
             values['tas'] = tas
         curCourse.save()
 
-        return render(request, "mainTemplates/assignToCoursePage.html", values)
+        return render(request, "mainTemplates/assignToCoursePage.html",values)
