@@ -27,6 +27,7 @@
             <tr>
                 <td>
                     <select name="TA">
+                        <option  value=""> </option>
                         {% for i in taList %}
                             <option value="{{ i.user_id }}">{{ i.name }}</option>
                         {% endfor %}

@@ -74,7 +74,7 @@ class AddAccount(View):
             'name': request.POST['name'],
             'address': request.POST['address'],
             'phoneNum': request.POST['phoneNum'],
-            'role: ': request.POST['role'],
+            'role': request.POST['role'],
             'v_id': verify[0],
             'v_email': verify[1],
             'v_password': verify[2],
@@ -277,7 +277,10 @@ class ManageSections(View):
         sectionList = list(SectionModel.objects.filter(course=curCourse).all())
         for i in sectionList:
             taID = request.POST[("TA/" + str(i.section_id))]
-            i.assigned_ta = MyUserModel.objects.get(user_id=taID)
+            if(taID!=''):
+                i.assigned_ta = MyUserModel.objects.get(user_id=taID)
+            else:
+                i.assigned_ta = None
             i.save()
 
         # prob not needed
@@ -307,7 +310,7 @@ class AddSection(View):
         ta = request.POST['TA']
         if sectionNumber != '':
             newSection = SectionModel(name=sectionNumber, course=curCourse)
-            if ta != '':
+            if ta != "":
                 newSection.assigned_ta = MyUserModel.objects.get(user_id=int(ta))
             newSection.save()
             return redirect("/sections/" + str(id) + "/" )

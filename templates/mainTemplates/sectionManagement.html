@@ -20,6 +20,7 @@
               <td>{{ i.name }}</td>
               <td>
                   <select name="TA/{{ i.section_id }}">
+                        <option  value=""> </option>
                         {% for j in taList %}
                             <option {% if j == i.assigned_ta %} selected {% endif %} value="{{ j.user_id }}">{{ j.name }}</option>
                         {% endfor %}
