@@ -2,13 +2,13 @@
 {% block content %}
     <div class="container">
         <div class="row m-4">
-            <div class="col-3">   </div>
+            <div class="col-4">   </div>
                 <div class="col-4">
                     <div class="card text-white bg-dark text-center my-2 py-3">
                         <h1>Contacts</h1>
                     </div>
                 </div>
-            <div class="col-2 text-center">
+            <div class="col-4 text-center">
                 <a href = '/' type="button" class="btn btn-danger my-4" style="font-size: 20px">LOG OUT</a>
             </div>
 
@@ -17,9 +17,8 @@
 
     <div class="container">
         <div class="row m-4">
-            <div class="col-1">   </div>
-                <div class="col-6">
-                    <table class="border: solid 1px #aaa999;" width="700" border="1">
+
+                    <table align="center" width="800" border="1" >
       <tr>
         <th bgcolor="#7fffd4">Supervisor</th>
         <th bgcolor="#7fffd4">Emails</th>
@@ -27,13 +26,12 @@
       </tr>
         {% for i in supervisors %}
             <tr>
-                <td style="border: solid 1px #aaa999;" width="180">{{i.name}}</td>
+                <td style="border: solid 1px #aaa999;" width="100">{{i.name}}</td>
                 <td style="border: solid 1px #aaa999;" width="200">{{i.email}}</td>
-                <td style="border: solid 1px #aaa999;" width="100">{{i.phone_number}}</td>
+                <td style="border: solid 1px #aaa999;" width="150">{{i.phone_number}}</td>
             </tr>
         {% endfor %}
     </table>
-                </div>
 
         </div>
     </div>
@@ -44,10 +42,7 @@
  </p>
         <div class="container">
         <div class="row m-4">
-            <div class="col-1">   </div>
-                <div class="col-6">
-
-    <table class="border: solid 1px #aaa999;" width="700" border="1">
+    <table align="center" width="800" border="1">
       <tr>
         <th bgcolor="#7fffd4">Instructor</th>
         <th bgcolor="#7fffd4">Emails</th>
@@ -55,9 +50,9 @@
       </tr>
         {% for i in instructors %}
             <tr>
-                <td style="border: solid 1px #aaa999;" width="180">{{i.name}}</td>
+                <td style="border: solid 1px #aaa999;" width="100">{{i.name}}</td>
                 <td style="border: solid 1px #aaa999;" width="200">{{i.email}}</td>
-                <td style="border: solid 1px #aaa999;" width="100">{{i.phone_number}}</td>
+                <td style="border: solid 1px #aaa999;" width="150">{{i.phone_number}}</td>
             </tr>
         {% endfor %}
     </table>
@@ -72,9 +67,7 @@
  </p>
     <div class="container">
         <div class="row m-4">
-            <div class="col-1">   </div>
-                <div class="col-6">
-                     <table class="border: solid 1px #aaa999;" width="700" border="1">
+                     <table class="border: solid 1px #aaa999;" width="800" border="1">
       <tr>
         <th bgcolor="#7fffd4">TA</th>
         <th bgcolor="#7fffd4">Emails</th>
@@ -82,20 +75,18 @@
       </tr>
         {% for i in TAs %}
             <tr>
-                <td style="border: solid 1px #aaa999;" width="180">{{i.name}}</td>
+                <td style="border: solid 1px #aaa999;" width="100">{{i.name}}</td>
                 <td style="border: solid 1px #aaa999;" width="200">{{i.email}}</td>
-                <td style="border: solid 1px #aaa999;" width="100">{{i.phoneNum}}</td>
+                <td style="border: solid 1px #aaa999;" width="150">{{i.phoneNum}}</td>
             </tr>
         {% endfor %}
     </table>
-                </div>
-
         </div>
     </div>
 
     <div class="container">
         <div class="row">
-            <div class="col-1"></div>
+            <div class="col-3"></div>
                 <a href = '/home/' type="button" class="btn btn-warning col-4 mx-auto my-5 py-2" style="font-size: 24px">Back to Dashboard</a>
             <div class="col-3"></div>
         </div>
