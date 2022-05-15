@@ -13,9 +13,21 @@ class MyTestAddCourse(TestCase):
         response = self.client.post('/', {'email': self.user.email, 'password': self.user.password})
         self.assertEqual(response.url, '/home/')
 
-        self.course2 = CourseModel.objects.create(course_id=3, dept_code="COMP SCI", name=" Intro to AI")
-        resp = self.client.post('addCourse/', {'id': self.course2.course_id, 'dep': self.course2.dept_code, 'name': self.course2.name})
+        # self.course2 = CourseModel.objects.create(course_id=3, dept_code="COMP SCI", name=" Intro to AI")
+        resp = self.client.post('/addCourse/', {'id': 3, 'dep': "CHEM", 'name': "Intro to AI"})
+        self.assertEqual(resp.url, '/courses/')
         courses = CourseModel.objects.all()
 
         self.assertEqual(len(courses), 2)
+
+    def test_course_invalid_adding(self):
+        response = self.client.post('/', {'email': self.user.email, 'password': self.user.password})
+        self.assertEqual(response.url, '/home/')
+
+        # self.course2 = CourseModel.objects.create(course_id=3, dept_code="COMP SCI", name=" Intro to AI")
+        resp = self.client.post('/addCourse/', {'id': -3, 'dep': "CHEM", 'name': "Intro to AI"}, follow=True)
+        courses = CourseModel.objects.all()
+        self.assertEqual(len(courses), 1)
+        self.assertEqual(resp.context["v_id"], "Invalid, integer between 0 and 9999")
+
 

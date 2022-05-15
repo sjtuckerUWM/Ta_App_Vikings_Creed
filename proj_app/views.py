@@ -280,7 +280,7 @@ class AddCourse(View):
         # verifying page goes back to courses page if parameters are blank, and check to see parameters aligned correctly
         verify = driver.addCourse(id, dep, name)
         if verify == ["", "", ""]:
-            return redirect("/courses")
+            return redirect("/courses/")
         values = {
             'id': request.POST['id'],
             'name': request.POST['name'],
