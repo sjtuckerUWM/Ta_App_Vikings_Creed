@@ -10,6 +10,14 @@ from classes.Driver import Driver
 class Login(View):
     # get method to render HTML page of Login
     def get(self, request):
+        try:
+            del request.session['currentUser']
+        except KeyError:
+            pass
+        try:
+            del request.session['currentRole']
+        except KeyError:
+            pass
         return render(request, "mainTemplates/loginPage.html")
 
 
@@ -28,6 +36,7 @@ class Login(View):
         elif outcome == 2:  # if both correct
 
             request.session["currentUser"] = driver.getCurrentAccount().getEmail()
+            request.session["currentRole"] = MyUserModel.objects.get(email=request.session["currentUser"]).role
             return redirect('/home/')  # place url from url.py
         else:
             return render(request, "mainTemplates/loginPage.html", {"message": "login error"})
@@ -35,18 +44,33 @@ class Login(View):
 # view for home page
 class Home(View):
     def get(self, request):
-        role_id = MyUserModel.objects.get(email=request.session["currentUser"]).role
+        try:
+            role_id = request.session["currentRole"]
+        except KeyError:
+            return redirect('/')
         return render(request, "mainTemplates/homePage.html", {"role_id": role_id})
 
 # view for Account management
 class AccountManagement(View):
     def get(self, request):
+        try:
+            role_id = request.session["currentRole"]
+            if role_id != 0:
+                return redirect('/home/')
+        except KeyError:
+            return redirect('/')
         users = list(MyUserModel.objects.all())  # getting all the users
         return render(request, "mainTemplates/accountManagement.html", {"users": users})
 
 #  view for Add account
 class AddAccount(View):
     def get(self, request):
+        try:
+            role_id = request.session["currentRole"]
+            if role_id != 0:
+                return redirect('/home/')
+        except KeyError:
+            return redirect('/')
         return render(request, "mainTemplates/addAccountPage.html")
 
     def post(self, request):
@@ -89,7 +113,13 @@ class AddAccount(View):
 # view for delete page
 class DeleteAccount(View):
     def get(self, request, id):
-        print(str(id))
+        #print(str(id))
+        try:
+            role_id = request.session["currentRole"]
+            if role_id != 0:
+                return redirect('/home/')
+        except KeyError:
+            return redirect('/')
         return render(request, "mainTemplates/deleteAccountPage.html")
 
     def post(self, request, id):
@@ -100,7 +130,14 @@ class DeleteAccount(View):
 # view for Edit account
 class EditAccount(View):
     def get(self, request, id):
-        print(str(id))
+        #print(str(id))
+        try:
+            role_id = request.session["currentRole"]
+            if role_id != 0:
+                return redirect('/home/')
+        except KeyError:
+            return redirect('/')
+
         driver = Driver(request.session["currentUser"])
         account = driver.accountList[MyUserModel.objects.get(user_id=id).email]  # getting the account by user id
         verify = ["", "", "", "", "", "", ""]
@@ -173,6 +210,13 @@ class EditAccount(View):
 # view for Manage Course page
 class ManageCourse(View):
     def get(self, request):
+        try:
+            role_id = request.session["currentRole"]
+            if role_id != 0 & role_id != 1:
+                return redirect('/home/')
+        except KeyError:
+            return redirect('/')
+
         courses = list(CourseModel.objects.all())  # getting all the courses
         user = MyUserModel.objects.get(email=request.session["currentUser"])
         missingPeople = False
@@ -188,6 +232,12 @@ class ManageCourse(View):
 # view for Add course page
 class AddCourse(View):
     def get(self, request):
+        try:
+            role_id = request.session["currentRole"]
+            if role_id != 0 & role_id != 1:
+                return redirect('/home/')
+        except KeyError:
+            return redirect('/')
         return render(request, "mainTemplates/addCoursePage.html", {"departments": Department.choices})
 
     def post(self, request):
@@ -217,6 +267,12 @@ class AddCourse(View):
 
 class AssignToCourse(View):
     def get(self, request, id):
+        try:
+            role_id = request.session["currentRole"]
+            if role_id != 0 & role_id != 1:
+                return redirect('/home/')
+        except KeyError:
+            return redirect('/')
         curCourse = CourseModel.objects.get(course_id=id)
         user = MyUserModel.objects.get(email=request.session["currentUser"])
         values = {
@@ -267,6 +323,12 @@ class AssignToCourse(View):
         return render(request, "mainTemplates/assignToCoursePage.html", values)
 class ManageSections(View):
     def get(self, request, id):
+        try:
+            role_id = request.session["currentRole"]
+            if role_id != 0 & role_id != 1:
+                return redirect('/home/')
+        except KeyError:
+            return redirect('/')
         curCourse = CourseModel.objects.get(course_id=id)
         values = {
             'course': curCourse,
@@ -302,6 +364,12 @@ class ManageSections(View):
 
 class AddSection(View):
     def get(self, request, id):
+        try:
+            role_id = request.session["currentRole"]
+            if role_id != 0 & role_id != 1:
+                return redirect('/home/')
+        except KeyError:
+            return redirect('/')
         curCourse = CourseModel.objects.get(course_id=id)
         values = {
             'course': curCourse,
@@ -332,6 +400,10 @@ class AddSection(View):
 
 class Contact(View):
     def get(self, request):
+        try:
+            request.session["currentRole"]
+        except KeyError:
+            return redirect('/')
         supervisors = list(MyUserModel.objects.filter(role=0).all())  # getting all the users
         instructors = list(MyUserModel.objects.filter(role=1).all())
         TAs = list(MyUserModel.objects.filter(role=2).all())
