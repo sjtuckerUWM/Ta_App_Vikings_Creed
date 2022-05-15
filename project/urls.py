@@ -31,6 +31,6 @@ urlpatterns = [
     path('assignToCourse/<int:id>/', AssignToCourse.as_view()),
     path('sections/<int:id>/', ManageSections.as_view()),
     path('addSection/<int:id>/', AddSection.as_view()),
-    path('contact/',Contact.as_view())
+    path('contact/', Contact.as_view())
 ]
 
