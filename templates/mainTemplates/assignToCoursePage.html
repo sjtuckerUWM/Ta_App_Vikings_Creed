@@ -1,36 +1,56 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Assign Course: {{course.name}}</h1>
+    <div class="container">
+        <div class="row m-4">
+            <div class="col-2">   </div>
+                <div class="col-8">
+                    <div class="card text-white bg-dark text-center my-2 py-3">
+                        <h1>Assign Course: {{course.name}}</h1>
+                    </div>
+                </div>
+            <div class="col-2 text-center">
+                <a href = '/' type="button" class="btn btn-danger my-4" style="font-size: 20px">LOG OUT</a>
+            </div>
+
+        </div>
+    </div>
+
+
 <form action="/assignToCourse/{{ course.course_id }}/" method="post">
     {% csrf_token %}
+<div class="container" align="center">
+
     <table>
 
         <tr>
-            <td><label for="instructor">Instructor</label></td>
+            <td><label style="font-size: 30px" class="px-2" for="instructor">Instructor</label></td>
         </tr>
         <tr>
             <td>
-                <select name="instructor">
+            <div align="center">
+                <select style="border-radius: 45px;width: 300px" type="text" class="mb-2 pb-1" name="instructor">
                 <option selected {% if user.role == 1%} disabled {% endif %} value="{{ instructor.user_id }}">{{instructor.name}}</option>
                     {% for i in instructorList %}
                     <option value="{{ i.user_id }}">{{ i.name }}</option>
                     {% endfor %}
                 </select>
+            </div>
+
             </td>
             <td>{{ v_instructor }}</td>
         </tr>
 
 
         <tr>
-            <td><label for="tas">TAs</label></td>
+            <td><label style="font-size: 30px" class="px-2" for="tas">TAs</label></td>
         </tr>
         <tr>
             <td>
-                <select {% if user.role == 1%} disabled {% endif %} name="taIDs" multiple>
+                <select style="width: 300px" type="text" class="mb-2 pb-1" multiple{% if user.role == 1%} disabled {% endif %} name="taIDs">
                     {% for i in taList %}
                          {% if i in tas%}
-                            <option selected value="{{ i.user_id }}">{{ i.name }}</option>
+                            <option selected value="{{ i.user_id }}">{{ i.name }} </option>
                          {% else %}
                             <option value="{{ i.user_id }}">{{ i.name }}</option>
                          {% endif %}
@@ -41,8 +61,16 @@
         </tr>
     </table>
     {% if user.role != 1%}
-    <input type="submit" value="Submit" />
+            <input style="font-size: 24px" type="submit" value="Assign" class="btn btn-primary" />
+
     {% endif %}
-</form>
-    <a href="/courses/"> Back to Course Management </a>
+</div>
+    </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-3"></div>
+                <a href = '/home/' type="button" class="btn btn-warning col-4 mx-auto my-5 py-2" style="font-size: 24px">Back to Dashboard</a>
+            <div class="col-3"></div>
+        </div>
+    </div>
 {% endblock %}
