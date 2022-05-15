@@ -45,6 +45,10 @@ class Login(View):
 class Home(View):
     def get(self, request):
         try:
+            request.session["currentUser"]
+        except KeyError:
+            return redirect('/')
+        try:
             role_id = request.session["currentRole"]
         except KeyError:
             return redirect('/')
@@ -53,6 +57,10 @@ class Home(View):
 # view for Account management
 class AccountManagement(View):
     def get(self, request):
+        try:
+            request.session["currentUser"]
+        except KeyError:
+            return redirect('/')
         try:
             role_id = request.session["currentRole"]
             if role_id != 0:
@@ -65,6 +73,10 @@ class AccountManagement(View):
 #  view for Add account
 class AddAccount(View):
     def get(self, request):
+        try:
+            request.session["currentUser"]
+        except KeyError:
+            return redirect('/')
         try:
             role_id = request.session["currentRole"]
             if role_id != 0:
@@ -115,6 +127,10 @@ class DeleteAccount(View):
     def get(self, request, id):
         #print(str(id))
         try:
+            request.session["currentUser"]
+        except KeyError:
+            return redirect('/')
+        try:
             role_id = request.session["currentRole"]
             if role_id != 0:
                 return redirect('/home/')
@@ -131,6 +147,10 @@ class DeleteAccount(View):
 class EditAccount(View):
     def get(self, request, id):
         #print(str(id))
+        try:
+            request.session["currentUser"]
+        except KeyError:
+            return redirect('/')
         try:
             role_id = request.session["currentRole"]
             if role_id != 0:
@@ -211,6 +231,10 @@ class EditAccount(View):
 class ManageCourse(View):
     def get(self, request):
         try:
+            request.session["currentUser"]
+        except KeyError:
+            return redirect('/')
+        try:
             role_id = request.session["currentRole"]
             if role_id != 0 & role_id != 1:
                 return redirect('/home/')
@@ -232,6 +256,10 @@ class ManageCourse(View):
 # view for Add course page
 class AddCourse(View):
     def get(self, request):
+        try:
+            request.session["currentUser"]
+        except KeyError:
+            return redirect('/')
         try:
             role_id = request.session["currentRole"]
             if role_id != 0 & role_id != 1:
@@ -267,6 +295,10 @@ class AddCourse(View):
 
 class AssignToCourse(View):
     def get(self, request, id):
+        try:
+            request.session["currentUser"]
+        except KeyError:
+            return redirect('/')
         try:
             role_id = request.session["currentRole"]
             if role_id != 0 & role_id != 1:
@@ -324,6 +356,10 @@ class AssignToCourse(View):
 class ManageSections(View):
     def get(self, request, id):
         try:
+            request.session["currentUser"]
+        except KeyError:
+            return redirect('/')
+        try:
             role_id = request.session["currentRole"]
             if role_id != 0 & role_id != 1:
                 return redirect('/home/')
@@ -365,6 +401,10 @@ class ManageSections(View):
 class AddSection(View):
     def get(self, request, id):
         try:
+            try:
+                request.session["currentUser"]
+            except KeyError:
+                return redirect('/')
             role_id = request.session["currentRole"]
             if role_id != 0 & role_id != 1:
                 return redirect('/home/')
@@ -401,9 +441,13 @@ class AddSection(View):
 class Contact(View):
     def get(self, request):
         try:
-            request.session["currentRole"]
+            request.session["currentUser"]
         except KeyError:
             return redirect('/')
+        try:
+            request.session["currentRole"]
+        except KeyError:
+            return redirect('/home/')
         supervisors = list(MyUserModel.objects.filter(role=0).all())  # getting all the users
         instructors = list(MyUserModel.objects.filter(role=1).all())
         TAs = list(MyUserModel.objects.filter(role=2).all())
