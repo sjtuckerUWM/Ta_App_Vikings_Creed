@@ -438,7 +438,7 @@ class AddSection(View):
         }
         return render(request, "mainTemplates/addSectionPage.html", values)
 
-class Contact(View):
+class Contacts(View):
     def get(self, request):
         try:
             request.session["currentUser"]
@@ -457,4 +457,27 @@ class Contact(View):
             "TAs": TAs
         }
         return render(request, "mainTemplates/contactsPage.html", values)
+
+class MySections(View):
+    def get(self, request):
+        try:
+            request.session["currentUser"]
+        except KeyError:
+            return redirect('/')
+        try:
+            request.session["currentRole"]
+        except KeyError:
+            return redirect('/home/')
+
+        curUser = MyUserModel.objects.get(email=request.session["currentUser"])
+        courses = CourseModel.objects.filter(assigned_tas__in=[curUser]).distinct()
+        courseList = list(courses)
+        sectionList = list(SectionModel.objects.filter(assigned_ta=curUser))
+
+        values = {
+            'curUser': curUser,
+            'courseList': courseList,
+            'sectionList': sectionList,
+        }
+        return render(request, "mainTemplates/mySectionsPage.html", values)
 
