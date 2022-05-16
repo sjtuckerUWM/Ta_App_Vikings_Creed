@@ -16,8 +16,8 @@ class MyTestAddSection(TestCase):
 
         self.client.post('/addCourse/', {'id': 3, 'dep': "COMP SCI", 'name': " Intro to AI"})
 
-        resp = self.client.post(f'/addSection/{self.section.section_id}', {'id': self.section.section_id})
-        self.assertEqual(resp.url, '/addSection/801/')
+        resp = self.client.post(f'/addSection/{self.course.course_id}', {'id': self.section.section_id})
+        self.assertEqual(resp.url, '/addSection/2/')
 
         sections = SectionModel.objects.all()
         self.assertEqual(len(sections), 1)
