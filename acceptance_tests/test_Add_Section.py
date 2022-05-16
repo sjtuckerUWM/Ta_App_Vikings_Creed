@@ -26,7 +26,7 @@ class MyTestAddSection(TestCase):
         response = self.client.post('/', {'email': self.user.email, 'password': self.user.password})
         self.assertEqual(response.url, '/home/')
 
-        resp = self.client.post(f'/addSection/{self.section.section_id}', {'id': -3}, follow=True)
+        resp = self.client.post(f'/addSection/{self.course.course_id}', {'id': -3}, follow=True)
         sections = SectionModel.objects.all()
 
         self.assertEqual(len(sections), 1)
