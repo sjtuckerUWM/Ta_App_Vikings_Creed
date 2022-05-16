@@ -16,3 +16,4 @@ class MyTestDeleteAccount(TestCase):
         resp= self.client.post(f'/deleteAccount/{self.user.user_id}/')
         self.assertEqual(resp.url,'/accounts')
         
+        
