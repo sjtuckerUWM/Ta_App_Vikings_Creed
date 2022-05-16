@@ -13,6 +13,6 @@ class MyTestDeleteAccount(TestCase):
         response = self.client.post('/', {'email': self.user.email, 'password': self.user.password})
         self.assertEqual(response.url, '/home/')
 
-        resp= self.client.post(f'/deleteAccount/{self.user.user_id}')
-        self.assertEqual(resp.url,'/deleteAccount/1/')
-        MyUserModel.objects.get(user_id=1).delete()
+        resp= self.client.post(f'/deleteAccount/{self.user.user_id}/')
+        self.assertEqual(resp.url,'/accounts')
+        
