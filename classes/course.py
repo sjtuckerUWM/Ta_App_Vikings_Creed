@@ -9,6 +9,7 @@ class Course:
         self.courseDep = courseDep
         self.courseName = CourseName
         self.TA_list = []
+        self.sectionList = []
 
     def assignTA(self, TA_list):
         self.setTA_list(TA_list)
@@ -71,6 +72,6 @@ class Course:
         for i in sectionList:
             self.sectionList.append(i)
 
-    def setTA_list(self, TA_list):
-        for i in TA_list:
-            self.TA_list.append(i)
+    def setTA_list(self, ta):
+        # for i in TA_list:
+        self.TA_list.append(ta)
