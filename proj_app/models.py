@@ -28,7 +28,7 @@ class CourseModel(models.Model):
     name = models.CharField(max_length=50)
 
     assigned_instructor = models.ForeignKey(MyUserModel, on_delete=models.SET_NULL, related_name="instructor", null=True)
-    assigned_tas = models.ManyToManyField(MyUserModel)
+    assigned_tas = models.ManyToManyField(MyUserModel, related_name="tas")
 
 # Model for Section
 class SectionModel(models.Model):
