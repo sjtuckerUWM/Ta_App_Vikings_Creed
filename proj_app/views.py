@@ -145,6 +145,7 @@ class DeleteAccount(View):
 
 # view for Edit account
 class EditAccount(View):
+
     def get(self, request, id):
         #print(str(id))
         try:
@@ -194,6 +195,7 @@ class EditAccount(View):
 
     def post(self, request, id):
         oldID = id
+        oldEmail = MyUserModel.objects.get(user_id=oldID).email
         # getting the current user and posting the parameters
         driver = Driver(request.session["currentUser"])
         inputID = request.POST['id']
@@ -205,6 +207,12 @@ class EditAccount(View):
         role = request.session['editRole']
         verify = driver.editAccount(oldID, inputID, email, password, name, address, phoneNum, role)
         if verify == ["", "", "", "", "", "", ""]:
+            if oldEmail == request.session['currentUser']:
+                try:
+                    del request.session['currentUser']
+                    request.session['currentUser'] = request.POST['email']
+                except KeyError:
+                    print('Failed to Reset currentUser email')
             return redirect("/accounts")   # returning the accounts if parameters are blank
 
         roleStr = request.session['editRoleString']
@@ -225,6 +233,7 @@ class EditAccount(View):
             'v_address': verify[4],
             'v_phoneNum': verify[5],
         }
+
         return render(request, "mainTemplates/editAccountPage.html", values)
 
 # view for Manage Course page
