@@ -16,9 +16,20 @@ class MyTestAddSection(TestCase):
 
         self.course2 = CourseModel.objects.create(course_id=3, dept_code="COMP SCI", name=" Intro to AI")
         self.section2 = SectionModel.objects.create(course_id=3, section_id=901)
-        resp = self.client.post('addCourse/', {'id': self.course2.course_id, 'dep': self.course2.dept_code, 'name': self.course2.name})
-        courses = CourseModel.objects.all()
+
+        resp = self.client.post(f'/addSection/{self.section2.section_id}', {'id': self.section2.section_id})
+        self.assertEqual(resp.url, '/addSection/901/')
+
         sections = SectionModel.objects.all()
 
-        self.assertEqual(len(courses), 2)
         self.assertEqual(len(sections), 2)
+
+    def test_course_invalid_add(self):
+        response = self.client.post('/', {'email': self.user.email, 'password': self.user.password})
+        self.assertEqual(response.url, '/home/')
+
+        resp = self.client.post(f'/addSection/', {'id': -3}, follow=True)
+        sections = SectionModel.objects.all()
+
+        # there should be only one item from the setup
+        self.assertEqual(len(sections), 1)
