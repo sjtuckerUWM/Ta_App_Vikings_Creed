@@ -273,7 +273,7 @@ class AddCourse(View):
             return redirect('/')
         try:
             role_id = request.session["currentRole"]
-            if role_id != 0 & role_id != 1:
+            if role_id != 0 and role_id != 1:
                 return redirect('/home/')
         except KeyError:
             return redirect('/')
@@ -312,7 +312,7 @@ class AssignToCourse(View):
             return redirect('/')
         try:
             role_id = request.session["currentRole"]
-            if role_id != 0 & role_id != 1:
+            if role_id != 0 and role_id != 1:
                 return redirect('/home/')
         except KeyError:
             return redirect('/')
@@ -372,7 +372,7 @@ class ManageSections(View):
             return redirect('/')
         try:
             role_id = request.session["currentRole"]
-            if role_id != 0 & role_id != 1:
+            if role_id != 0 and role_id != 1:
                 return redirect('/home/')
         except KeyError:
             return redirect('/')
@@ -417,7 +417,7 @@ class AddSection(View):
             except KeyError:
                 return redirect('/')
             role_id = request.session["currentRole"]
-            if role_id != 0 & role_id != 1:
+            if role_id != 0 and role_id != 1:
                 return redirect('/home/')
         except KeyError:
             return redirect('/')
