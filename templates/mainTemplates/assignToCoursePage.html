@@ -29,8 +29,8 @@
         <tr>
             <td>
             <div align="center">
-                <select style="border-radius: 45px;width: 300px" type="text" class="mb-2 pb-1" name="instructor">
-                <option selected {% if user.role == 1%} disabled {% endif %} value="{{ instructor.user_id }}">{{instructor.name}}</option>
+                <select {% if user.role == 1%} disabled {% endif %} style="border-radius: 45px;width: 300px" type="text" class="mb-2 pb-1" name="instructor">
+                <option selected value="{{ instructor.user_id }}">{{instructor.name}}</option>
                     {% for i in instructorList %}
                     <option value="{{ i.user_id }}">{{ i.name }}</option>
                     {% endfor %}
