@@ -35,8 +35,9 @@ class Login(View):
             return render(request, "mainTemplates/loginPage.html", {"message": "bad password"})
         elif outcome == 2:  # if both correct
 
-            request.session["currentUser"] = driver.getCurrentAccount().getEmail()
+            request.session["currentUser"] = driver.getCurrentAccount()
             request.session["currentRole"] = MyUserModel.objects.get(email=request.session["currentUser"]).role
+            print(request.session["currentRole"])
             return redirect('/home/')  # place url from url.py
         else:
             return render(request, "mainTemplates/loginPage.html", {"message": "login error"})
@@ -245,7 +246,8 @@ class ManageCourse(View):
             return redirect('/')
         try:
             role_id = request.session["currentRole"]
-            if role_id != 0 & role_id != 1:
+            print("role is " + str(role_id))
+            if role_id != 0 and role_id != 1:
                 return redirect('/home/')
         except KeyError:
             return redirect('/')
