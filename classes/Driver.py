@@ -54,7 +54,7 @@ class Driver(object):
         try:
             m = MyUserModel.objects.get(email=email)
             if MyUserModel.objects.get(email=email).password == password:
-                self.currentAccount = self.accountList[email]
+                self.currentAccount = email
                 # if both email and password are correct
                 return 2
             # if one of them fails
