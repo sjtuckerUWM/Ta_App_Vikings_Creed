@@ -17,7 +17,7 @@
 
 
 
-    <form action="/addSection/{{course.course_id}}/" method="post">
+    <form method="post">
     {% csrf_token %}
         <table align="center">
             <tr>
@@ -55,5 +55,13 @@
  </p>
         <input align="center" style="font-size: 24px" class="btn btn-primary" type="submit" value="Submit" />
     </form>
-     </div>
+
+     <div class="container">
+            <div class="row">
+                <div class="col-3"></div>
+                <a href = "/sections/{{ course.course_id }}/" type="button" class="btn btn-warning col-4 mx-auto my-5 py-2" style="font-size: 24px">Back to Section Management</a>
+                <div class="col-3"></div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
